@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Horti Magici palette */
+  --color-brand: #234a49;
+  --color-brand-dark: #1a3837;
+  --color-brand-soft: #e4ecea;
+  --color-ivory: #f7f2e8;
+  --color-paper: #fffdf8;
+  --color-mist: #eceae4;
+  --color-ink: #1f2a29;
+  --color-ink-soft: #5a6866;
+  --color-danger: #a33a2f;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+
+  --radius-card: 1.25rem;
+  --shadow-soft: 0 1px 2px rgb(35 74 73 / 0.06), 0 8px 24px -8px rgb(35 74 73 / 0.12);
+}
+
+html {
+  background: var(--color-ivory);
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* pop-up notifications */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes toast-bar {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+.toast-in { animation: toast-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.toast-bar { transform-origin: left; animation-name: toast-bar; animation-timing-function: linear; animation-fill-mode: forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .toast-in { animation: none; }
+}

@@ -1,0 +1,545 @@
+{
+  "brand": {
+    "name": "Horti Magici",
+    "tagline": "Staff management"
+  },
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "signOut": "Sign out",
+    "language": "Language",
+    "today": "Today",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "languages": {
+    "it": "Italiano",
+    "en": "English"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "employee": "Employee"
+  },
+  "nav": {
+    "dashboard": "Overview",
+    "employees": "Employees",
+    "availability": "Availability",
+    "schedule": "Shifts",
+    "teamSchedule": "Schedule",
+    "requests": "Requests"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to manage shifts and availability.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invitationOnly": "Access is by invitation only. If you don't have an account yet, ask Stefano or Tessa.",
+    "notConfigured": "The database connection is not configured yet. Add the Supabase credentials to .env.local (see the README)."
+  },
+  "setPassword": {
+    "title": "Set your password",
+    "subtitle": "Choose a password to activate your account.",
+    "password": "New password",
+    "confirm": "Confirm password",
+    "submit": "Activate account",
+    "linkInvalid": "The link is invalid or has expired. Ask for a new invitation."
+  },
+  "errors": {
+    "invalidCredentials": "Incorrect email or password.",
+    "inactive": "This account has been deactivated. Please contact an administrator.",
+    "noProfile": "Profile not found. Please contact an administrator.",
+    "notConfigured": "Service not configured."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "passwordLength": "The password must be at least 10 characters",
+    "passwordMismatch": "The passwords do not match",
+    "tooLong": "Text is too long",
+    "phoneInvalid": "Enter a valid phone number",
+    "colorInvalid": "Invalid colour"
+  },
+  "admin": {
+    "greeting": "Hello, {name}",
+    "subtitle": "Here is what needs your attention.",
+    "activeEmployees": "Active employees",
+    "noEmployees": "No active employees. Add the first one from the Employees section.",
+    "loadError": "Unable to load data.",
+    "quickActions": "Quick actions",
+    "addEmployee": "Add employee",
+    "requestAvailability": "Request availability",
+    "availabilityRequest": "Availability request in progress",
+    "everyoneResponded": "Everyone has responded.",
+    "notResponded": "Not yet responded",
+    "noOpenRequest": "No open request.",
+    "openWeek": "Weekly calendar",
+    "openMonth": "Monthly calendar",
+    "createShifts": "Create shifts",
+    "publishing": "Publishing",
+    "unpublished": "Schedules to publish",
+    "noDrafts": "No drafts waiting.",
+    "changed": "changed",
+    "reviewPublish": "Review and publish",
+    "noWarnings": "No warnings on the first schedule to publish.",
+    "warningsCount": "{count, plural, one {# warning} other {# warnings}} on the first schedule to publish.",
+    "recentlyPublished": "Recently published",
+    "nonePublished": "No published schedules.",
+    "history": "History",
+    "pendingRequests": "Pending requests",
+    "noPendingRequests": "No pending requests.",
+    "reviewRequests": "Go to requests"
+  },
+  "employee": {
+    "greeting": "Hello, {name}",
+    "subtitle": "Your confirmed shifts will appear here.",
+    "noShifts": "There are no confirmed shifts yet.",
+    "nextShifts": "Your next shifts",
+    "teamSchedule": "Team schedule",
+    "upcomingHours": "Scheduled hours: {hours}"
+  },
+  "employees": {
+    "title": "Employees",
+    "add": "Add employee",
+    "search": "Search",
+    "searchPlaceholder": "Search by name, email or role",
+    "filterStatus": "Status",
+    "statusAll": "All",
+    "statusActive": "Active",
+    "statusInactive": "Deactivated",
+    "apply": "Filter",
+    "empty": "No employees yet. Add the first one to send an invitation.",
+    "noResults": "No results for this search.",
+    "loadError": "Unable to load employees.",
+    "memberSince": "Since {date}",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "confirmDeactivate": "Deactivate this employee? They will no longer be able to sign in, but shifts and history are kept.",
+    "availabilityHistory": "Availability history",
+    "noAvailability": "No availability submitted.",
+    "weekOf": "Week of {date}",
+    "submitted": "Submitted",
+    "draft": "Draft",
+    "published": "Published",
+    "shifts": "Shifts",
+    "noShifts": "No shifts assigned.",
+    "form": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "emailLocked": "The email is tied to the account and cannot be changed.",
+      "phone": "Phone",
+      "jobPosition": "Job position",
+      "jobPositionHint": "e.g. Bartender",
+      "language": "Preferred language",
+      "color": "Calendar colour",
+      "inviteNote": "The employee will receive an invitation email to activate their account and choose a password.",
+      "createAndInvite": "Create and send invitation",
+      "save": "Save changes",
+      "saved": "Changes saved."
+    },
+    "errors": {
+      "forbidden": "You don't have permission to do this.",
+      "invalid": "Please check the entered data.",
+      "emailTaken": "An account with this email already exists.",
+      "inviteNotConfigured": "Invitations are not configured: the Supabase service key is missing.",
+      "inviteFailed": "Could not send the invitation. Try again later.",
+      "saveFailed": "Saving failed.",
+      "notFound": "Employee not found."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications.",
+    "markAllRead": "Mark all as read",
+    "loadError": "Unable to load notifications.",
+    "unreadCount": "{count, plural, one {# unread notification} other {# unread notifications}}",
+    "types": {
+      "availability_requested": {
+        "title": "New availability request",
+        "body": "Tell us when you are available for the week of {week}. Deadline: {deadline}."
+      },
+      "availability_submitted": {
+        "title": "Availability submitted",
+        "body": "{name} submitted availability for the week of {week}."
+      },
+      "availability_updated": {
+        "title": "Availability updated",
+        "body": "{name} updated availability for the week of {week}."
+      },
+      "availability_confirmed": {
+        "title": "Availability received",
+        "body": "We received your availability for the week of {week}. You can change it while the request is open."
+      },
+      "availability_deadline": {
+        "title": "Deadline approaching",
+        "body": "You have not submitted availability for the week of {week}. Deadline: {deadline}."
+      },
+      "availability_missing": {
+        "title": "Missing availability",
+        "body": "{count, plural, one {# employee has} other {# employees have}} not responded yet for the week of {week}."
+      },
+      "schedule_modified": {
+        "title": "Schedule modified",
+        "body": "The published schedule for the week of {week} was changed and needs to be republished."
+      },
+      "schedule_published": {
+        "title": "Schedule published",
+        "body": "The shift schedule for the week of {week} is available."
+      },
+      "schedule_updated": {
+        "title": "Schedule updated",
+        "body": "The schedule for the week of {week} was updated (version {version}). Check your shifts."
+      },
+      "schedule_publish_confirmed": {
+        "title": "Publication complete",
+        "body": "Schedule for the week of {week} published (version {version}). You can now share it with the group."
+      },
+      "open_shift_posted": {
+        "title": "New open shift",
+        "body": "There is a free shift: {when}. You can request it from the calendar."
+      },
+      "shift_request_received": {
+        "title": "New shift request",
+        "body": "{name} {kind, select, take {requested the open shift} other {offered their availability}}: {when}."
+      },
+      "shift_request_approved": {
+        "title": "Request approved",
+        "body": "An admin confirmed your shift: {when}."
+      },
+      "shift_request_rejected": {
+        "title": "Request declined",
+        "body": "Your request for {when} was not accepted."
+      },
+      "shift_assigned": {
+        "title": "New shift assigned",
+        "body": "You have been assigned a shift: {when}."
+      },
+      "shift_changed": {
+        "title": "Shift changed",
+        "body": "Your shift was changed: now {when}."
+      },
+      "shift_removed": {
+        "title": "Shift cancelled",
+        "body": "Your shift was cancelled: {when}."
+      },
+      "availability_review_confirmed": {
+        "title": "Availability confirmed",
+        "body": "An admin confirmed your availability for the week of {week}."
+      },
+      "availability_changes_requested": {
+        "title": "Changes requested",
+        "body": "An admin asks for changes to your availability for the week of {week}: {note}"
+      }
+    },
+    "soundOn": "Sound on (click to mute)",
+    "soundOff": "Sound off (click to turn on)",
+    "dismiss": "Dismiss notification"
+  },
+  "availability": {
+    "title": "Your availability",
+    "deadline": "Submit by {date}",
+    "openRequests": "Availability requests",
+    "noOpenRequests": "No open requests right now.",
+    "loadError": "Unable to load requests.",
+    "statusSubmitted": "Submitted",
+    "statusDraft": "Draft saved, not submitted yet",
+    "statusNotSent": "Not submitted yet",
+    "submitCta": "SUBMIT AVAILABILITY",
+    "update": "Update availability",
+    "closedNotice": "This request is closed: availability can no longer be changed.",
+    "progress": "{done} of {total} days completed",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "from": "From",
+    "to": "To",
+    "nextDay": "until the next day",
+    "addInterval": "Add time interval",
+    "removeInterval": "Remove time interval",
+    "dayNote": "Note for this day (optional)",
+    "weekNote": "Notes for the week (optional)",
+    "saveDraft": "Save draft",
+    "submit": "Submit availability",
+    "draftSaved": "Draft saved. Remember to submit it.",
+    "submittedConfirm": "Availability submitted. Thank you! You can change it while the request is open.",
+    "issues": {
+      "unanswered": "Choose whether you are available.",
+      "noWindows": "Add at least one time interval.",
+      "sameTime": "Start and end cannot be the same.",
+      "overlap": "Time intervals overlap."
+    },
+    "errors": {
+      "forbidden": "You don't have permission to do this.",
+      "request_exists": "A request already exists for this week.",
+      "request_not_open": "The request is not open.",
+      "request_not_draft": "The request has already been sent.",
+      "overlap": "Some time intervals overlap.",
+      "incomplete": "Complete every day and time interval before submitting.",
+      "already_submitted": "You already submitted: use “Update availability”.",
+      "day_out_of_week": "Day is outside the requested week.",
+      "duplicate_day": "Duplicate day.",
+      "invalid_input": "Please check the entered data.",
+      "unknown": "Something went wrong. Please try again.",
+      "not_submitted": "The employee has not submitted availability yet.",
+      "note_required": "Write a note to request changes.",
+      "not_found": "Availability not found."
+    },
+    "admin": {
+      "title": "Availability management",
+      "newRequest": "New request",
+      "week": "Week",
+      "deadline": "Deadline",
+      "message": "Message (optional)",
+      "messageHint": "e.g. We need more people at the weekend",
+      "sendNow": "Send to all employees",
+      "saveDraft": "Save as draft",
+      "noFreeWeeks": "All upcoming weeks already have a request.",
+      "requests": "Requests",
+      "noRequests": "No requests yet.",
+      "loadError": "Unable to load requests.",
+      "status": {
+        "draft": "Draft",
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "close": "Close request",
+      "confirmClose": "Close the request? Employees will no longer be able to change their availability.",
+      "deadlineLabel": "deadline {date}",
+      "completion": "Completion",
+      "submittedOf": "{done} of {total} employees have submitted",
+      "noEmployees": "There are no active employees.",
+      "state": {
+        "submitted": "Submitted",
+        "draft": "Draft",
+        "pending": "Pending"
+      },
+      "views": "Views",
+      "viewWeek": "Week",
+      "employee": "Employee"
+    },
+    "reviewState": {
+      "pending": "Submitted · waiting for an admin to confirm",
+      "confirmed": "Confirmed by an admin",
+      "changes_requested": "An admin asks for changes"
+    },
+    "reviewPendingHint": "You can still edit it while the request is open: it will go back to waiting for confirmation.",
+    "reviseCta": "Edit availability",
+    "review": {
+      "state": {
+        "pending": "{name} submitted their availability: waiting for your confirmation.",
+        "confirmed": "{name}'s availability is confirmed.",
+        "changes_requested": "You asked {name} for changes: waiting for them to update it."
+      },
+      "confirm": "Confirm availability",
+      "requestChanges": "Request changes",
+      "notePlaceholder": "Note (required when requesting changes)",
+      "short": {
+        "pending": "To confirm",
+        "confirmed": "Confirmed",
+        "changes_requested": "Changes requested"
+      },
+      "waiting": "{count, plural, one {# availability} other {# availabilities}} waiting for confirmation.",
+      "reviewNow": "Review now"
+    }
+  },
+  "schedule": {
+    "title": "Shift calendar",
+    "week": "Week",
+    "month": "Month",
+    "today": "Today",
+    "prev": "Previous",
+    "next": "Next",
+    "views": "View",
+    "filter": "Employees",
+    "newShift": "New shift",
+    "editShift": "Edit shift",
+    "employee": "Employee",
+    "date": "Date",
+    "from": "From",
+    "to": "To",
+    "position": "Position",
+    "notes": "Notes",
+    "save": "Save shift",
+    "saving": "Saving…",
+    "delete": "Delete",
+    "confirmDelete": "Delete this shift?",
+    "cancel": "Cancel",
+    "nextDay": "ends the next day",
+    "noEmployees": "Add at least one active employee to create shifts.",
+    "loadError": "Unable to load shifts.",
+    "status": {
+      "none": "No shifts",
+      "draft": "Draft",
+      "published": "Published",
+      "publishedChanges": "Published, with unpublished changes"
+    },
+    "count": "{count, plural, one {# person} other {# people}}",
+    "openWeek": "Open the week",
+    "override": {
+      "outside": "This shift is outside the availability the employee submitted.",
+      "no_submission": "The employee has not submitted availability for this week yet.",
+      "note": "Reason (optional)",
+      "confirm": "Save anyway",
+      "hint": "If you continue, the override will be recorded in the audit log."
+    },
+    "errors": {
+      "forbidden": "You don't have permission to do this.",
+      "invalid_input": "Please check the entered data.",
+      "invalid_employee": "Invalid or inactive employee.",
+      "overlap": "This employee already has an overlapping shift.",
+      "not_found": "Shift not found.",
+      "unknown": "Something went wrong. Please try again.",
+      "outside_hours": "Time not allowed: shifts run from 07:00 to 02:00 the next day.",
+      "not_open": "This shift is no longer available.",
+      "already_requested": "You already sent a request for this time.",
+      "already_decided": "Request already handled.",
+      "in_the_past": "You cannot offer a time that has already passed."
+    },
+    "summary": {
+      "title": "Week summary",
+      "hoursPerEmployee": "Hours per employee",
+      "hoursPerDay": "Hours per day",
+      "shifts": "Shifts",
+      "hours": "Hours",
+      "total": "Total",
+      "warnings": "Warnings",
+      "noWarnings": "No warnings.",
+      "noShifts": "No shifts this week."
+    },
+    "warnings": {
+      "overlap": "{name}: overlapping shifts.",
+      "outside_availability": "{name}: a shift is outside the submitted availability.",
+      "no_submission": "{name}: no availability submitted for this week.",
+      "overridden": "{name}: shift outside availability (override recorded).",
+      "long_shift": "{name}: very long shift ({hours} hours).",
+      "weekly_hours": "{name}: {hours} hours this week, above the configured threshold.",
+      "no_shifts": "{name} has no shifts this week."
+    },
+    "reviewPublish": "Review and publish",
+    "history": "History",
+    "days": "Day",
+    "nobody": "Nobody",
+    "addOnDay": "Add a shift on {day}",
+    "timelineHint": "Hours run from {open} to {close} the next day. Click an empty spot to add a shift, drag a shift to move it, drag its right edge to change the end.",
+    "hoursLimit": "Shifts can start from {open} and must end by {close} the next day.",
+    "myHours": "Your hours this week: {hours}",
+    "noMyShifts": "You have no shifts this week.",
+    "teamCalendar": "Team calendar",
+    "employeeHint": "The same calendar admins see, updated live (hours {open}–{close} the next day). Click an open shift to request it.",
+    "openShift": "Open shift",
+    "openSlots": "{count, plural, one {# place} other {# places}}",
+    "openShiftOption": "Open shift (to be assigned)",
+    "slots": "Places available",
+    "openShiftHint": "Employees are notified and can request it; you confirm who takes it.",
+    "selectedShift": "Selected shift",
+    "close": "Close",
+    "cancelOpen": "Cancel open shift",
+    "confirmCancelOpen": "Cancel this open shift? Pending requests will be declined.",
+    "requestShift": "Request this shift",
+    "requestNote": "Note (optional)",
+    "requestSent": "Request sent: an admin has to confirm it.",
+    "offerCta": "Offer my availability",
+    "offerTitle": "Offer your availability",
+    "offerIntro": "Tell us when you can work. The shift is only created if an admin confirms it.",
+    "offerSend": "Send offer",
+    "offerSent": "Offer sent: an admin has to confirm it."
+  },
+  "publish": {
+    "reviewTitle": "Schedule review",
+    "conflicts": "Availability conflicts",
+    "withoutShifts": "Without shifts",
+    "noShiftsDay": "No shifts.",
+    "publishCta": "CONFIRM AND PUBLISH SCHEDULE",
+    "republishCta": "PUBLISH CHANGES",
+    "publishing": "Publishing…",
+    "confirm": "Publish the schedule? All employees will be notified.",
+    "confirmWithWarnings": "There {count, plural, one {is # unresolved warning} other {are # unresolved warnings}}. Publish anyway? All employees will be notified.",
+    "published": "Schedule published (version {version}). Employees have been notified.",
+    "viewVersions": "View version history",
+    "alreadyPublished": "This schedule is already published with no changes.",
+    "nothingToPublishEmpty": "Add at least one shift before publishing.",
+    "historyTitle": "Version history",
+    "noVersions": "No published versions for this week.",
+    "version": "Version {version}",
+    "current": "Current",
+    "shiftCount": "{count, plural, one {# shift} other {# shifts}}",
+    "diff": "{added} added, {removed} removed, {changed} changed",
+    "teamSchedule": "Team schedule",
+    "weekNav": "Week navigation",
+    "prevWeek": "Previous week",
+    "nextWeek": "Next week",
+    "thisWeek": "This week",
+    "notPublished": "This week's schedule has not been published yet.",
+    "loadError": "Unable to load the schedule.",
+    "myHours": "Your hours this week: {hours}",
+    "noMyShifts": "You have no shifts this week.",
+    "you": "you",
+    "versionInfo": "Version {version}, published {date}",
+    "errors": {
+      "forbidden": "You don't have permission to publish.",
+      "schedule_not_found": "No schedule for this week.",
+      "nothing_to_publish": "There are no changes to publish.",
+      "empty_schedule": "Add at least one shift before publishing.",
+      "invalid_input": "Invalid week.",
+      "unknown": "Something went wrong. Please try again."
+    },
+    "shareWhatsApp": "Share to the WhatsApp group →"
+  },
+  "whatsapp": {
+    "title": "Share to the staff WhatsApp group",
+    "manualNote": "The app sends nothing to WhatsApp. Copy the message, open WhatsApp Web, pick the existing Horti Magici group, then paste and send it yourself.",
+    "language": "Message language",
+    "prepare": "Prepare message",
+    "messagePreview": "Message preview",
+    "copyCta": "COPY WEEKLY SCHEDULE",
+    "openCta": "OPEN WHATSAPP WEB",
+    "confirmCta": "I sent the message",
+    "copied": "Message copied to the clipboard.",
+    "copyFailed": "Could not copy automatically: select the text and copy it by hand.",
+    "confirmPrompt": "Do you confirm that you sent this message to the WhatsApp group yourself? The app cannot verify it.",
+    "stepPrepared": "✓ Message prepared",
+    "stepCopyPending": "○ Not copied yet",
+    "stepCopied": "✓ Copied on {date}",
+    "stepOpenPending": "○ WhatsApp Web not opened from here yet",
+    "stepOpened": "✓ WhatsApp Web opened on {date}",
+    "stepConfirmPending": "○ Sending not confirmed yet",
+    "stepConfirmed": "✓ Sending confirmed manually by {name} on {date}",
+    "manualDisclaimer": "Manual confirmation: WhatsApp did not verify delivery.",
+    "you": "you",
+    "newMessage": "Prepare a new message",
+    "errors": {
+      "forbidden": "You don't have permission to do this.",
+      "not_published": "Publish the schedule first.",
+      "not_found": "Message not found.",
+      "already_confirmed": "Sending already confirmed.",
+      "invalid_input": "Invalid data.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "requests": {
+    "title": "Employee requests",
+    "intro": "An employee can only ask: the shift is created when you confirm it.",
+    "pending": "Pending",
+    "history": "History",
+    "nonePending": "No pending requests.",
+    "noneHistory": "No handled requests.",
+    "loadError": "Unable to load requests.",
+    "kind": {
+      "take": "Requests an open shift",
+      "offer": "Offers their availability"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Declined",
+      "cancelled": "Withdrawn"
+    },
+    "approve": "Approve and create the shift",
+    "reject": "Decline",
+    "replyNote": "Note for the employee (optional)",
+    "mine": "My requests",
+    "withdraw": "Withdraw",
+    "withdrawFailed": "Could not withdraw the request."
+  }
+}

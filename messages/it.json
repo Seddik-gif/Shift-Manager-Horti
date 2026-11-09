@@ -1,0 +1,545 @@
+{
+  "brand": {
+    "name": "Horti Magici",
+    "tagline": "Gestione del personale"
+  },
+  "common": {
+    "loading": "Caricamento…",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "signOut": "Esci",
+    "language": "Lingua",
+    "today": "Oggi",
+    "genericError": "Qualcosa è andato storto. Riprova."
+  },
+  "languages": {
+    "it": "Italiano",
+    "en": "English"
+  },
+  "roles": {
+    "admin": "Amministratore",
+    "employee": "Dipendente"
+  },
+  "nav": {
+    "dashboard": "Panoramica",
+    "employees": "Dipendenti",
+    "availability": "Disponibilità",
+    "schedule": "Turni",
+    "teamSchedule": "Orari",
+    "requests": "Richieste"
+  },
+  "login": {
+    "title": "Bentornato",
+    "subtitle": "Accedi per gestire turni e disponibilità.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Accedi",
+    "submitting": "Accesso in corso…",
+    "invitationOnly": "L'accesso è solo su invito. Se non hai ancora un account, chiedi a Stefano o Tessa.",
+    "notConfigured": "Il collegamento al database non è ancora configurato. Aggiungi le credenziali Supabase nel file .env.local (vedi README)."
+  },
+  "setPassword": {
+    "title": "Imposta la tua password",
+    "subtitle": "Scegli una password per attivare il tuo account.",
+    "password": "Nuova password",
+    "confirm": "Conferma password",
+    "submit": "Attiva account",
+    "linkInvalid": "Il link non è valido o è scaduto. Chiedi un nuovo invito."
+  },
+  "errors": {
+    "invalidCredentials": "Email o password non corretti.",
+    "inactive": "Questo account è stato disattivato. Contatta un amministratore.",
+    "noProfile": "Profilo non trovato. Contatta un amministratore.",
+    "notConfigured": "Servizio non configurato."
+  },
+  "validation": {
+    "required": "Campo obbligatorio",
+    "email": "Inserisci un indirizzo email valido",
+    "passwordLength": "La password deve contenere almeno 10 caratteri",
+    "passwordMismatch": "Le password non coincidono",
+    "tooLong": "Testo troppo lungo",
+    "phoneInvalid": "Inserisci un numero di telefono valido",
+    "colorInvalid": "Colore non valido"
+  },
+  "admin": {
+    "greeting": "Ciao, {name}",
+    "subtitle": "Ecco cosa richiede la tua attenzione.",
+    "activeEmployees": "Dipendenti attivi",
+    "noEmployees": "Nessun dipendente attivo. Aggiungi il primo dalla sezione Dipendenti.",
+    "loadError": "Impossibile caricare i dati.",
+    "quickActions": "Azioni rapide",
+    "addEmployee": "Aggiungi dipendente",
+    "requestAvailability": "Richiedi disponibilità",
+    "availabilityRequest": "Richiesta di disponibilità in corso",
+    "everyoneResponded": "Tutti hanno risposto.",
+    "notResponded": "Non hanno ancora risposto",
+    "noOpenRequest": "Nessuna richiesta aperta.",
+    "openWeek": "Calendario settimanale",
+    "openMonth": "Calendario mensile",
+    "createShifts": "Crea turni",
+    "publishing": "Pubblicazione",
+    "unpublished": "Turni da pubblicare",
+    "noDrafts": "Nessuna bozza in attesa.",
+    "changed": "modificato",
+    "reviewPublish": "Rivedi e pubblica",
+    "noWarnings": "Nessun avviso sul primo programma da pubblicare.",
+    "warningsCount": "{count, plural, one {# avviso} other {# avvisi}} sul primo programma da pubblicare.",
+    "recentlyPublished": "Pubblicati di recente",
+    "nonePublished": "Nessun programma pubblicato.",
+    "history": "Cronologia",
+    "pendingRequests": "Richieste in attesa",
+    "noPendingRequests": "Nessuna richiesta in attesa.",
+    "reviewRequests": "Vai alle richieste"
+  },
+  "employee": {
+    "greeting": "Ciao, {name}",
+    "subtitle": "Qui troverai i tuoi turni confermati.",
+    "noShifts": "Non ci sono ancora turni confermati.",
+    "nextShifts": "I tuoi prossimi turni",
+    "teamSchedule": "Programma della squadra",
+    "upcomingHours": "Ore in programma: {hours}"
+  },
+  "employees": {
+    "title": "Dipendenti",
+    "add": "Aggiungi dipendente",
+    "search": "Cerca",
+    "searchPlaceholder": "Cerca per nome, email o ruolo",
+    "filterStatus": "Stato",
+    "statusAll": "Tutti",
+    "statusActive": "Attivo",
+    "statusInactive": "Disattivato",
+    "apply": "Filtra",
+    "empty": "Nessun dipendente ancora. Aggiungi il primo per invitarlo.",
+    "noResults": "Nessun risultato per questa ricerca.",
+    "loadError": "Impossibile caricare i dipendenti.",
+    "memberSince": "Dal {date}",
+    "deactivate": "Disattiva",
+    "reactivate": "Riattiva",
+    "confirmDeactivate": "Disattivare questo dipendente? Non potrà più accedere, ma turni e storico restano conservati.",
+    "availabilityHistory": "Storico disponibilità",
+    "noAvailability": "Nessuna disponibilità inviata.",
+    "weekOf": "Settimana del {date}",
+    "submitted": "Inviata",
+    "draft": "Bozza",
+    "published": "Pubblicato",
+    "shifts": "Turni",
+    "noShifts": "Nessun turno assegnato.",
+    "form": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "emailLocked": "L'email è legata all'account e non può essere modificata.",
+      "phone": "Telefono",
+      "jobPosition": "Ruolo",
+      "jobPositionHint": "es. Barista",
+      "language": "Lingua preferita",
+      "color": "Colore nel calendario",
+      "inviteNote": "Il dipendente riceverà un'email di invito per attivare l'account e scegliere la password.",
+      "createAndInvite": "Crea e invia invito",
+      "save": "Salva modifiche",
+      "saved": "Modifiche salvate."
+    },
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid": "Controlla i dati inseriti.",
+      "emailTaken": "Esiste già un account con questa email.",
+      "inviteNotConfigured": "Invio inviti non configurato: manca la chiave di servizio Supabase.",
+      "inviteFailed": "Impossibile inviare l'invito. Riprova più tardi.",
+      "saveFailed": "Salvataggio non riuscito.",
+      "notFound": "Dipendente non trovato."
+    }
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "empty": "Nessuna notifica.",
+    "markAllRead": "Segna tutte come lette",
+    "loadError": "Impossibile caricare le notifiche.",
+    "unreadCount": "{count, plural, one {# notifica non letta} other {# notifiche non lette}}",
+    "types": {
+      "availability_requested": {
+        "title": "Nuova richiesta di disponibilità",
+        "body": "Indica quando sei disponibile per la settimana {week}. Scadenza: {deadline}."
+      },
+      "availability_submitted": {
+        "title": "Disponibilità inviata",
+        "body": "{name} ha inviato la disponibilità per la settimana {week}."
+      },
+      "availability_updated": {
+        "title": "Disponibilità aggiornata",
+        "body": "{name} ha aggiornato la disponibilità per la settimana {week}."
+      },
+      "availability_confirmed": {
+        "title": "Disponibilità ricevuta",
+        "body": "Abbiamo ricevuto la tua disponibilità per la settimana {week}. Puoi modificarla finché la richiesta resta aperta."
+      },
+      "availability_deadline": {
+        "title": "Scadenza in arrivo",
+        "body": "Non hai ancora inviato la disponibilità per la settimana {week}. Scadenza: {deadline}."
+      },
+      "availability_missing": {
+        "title": "Disponibilità mancanti",
+        "body": "{count, plural, one {# dipendente non ha} other {# dipendenti non hanno}} ancora risposto per la settimana {week}."
+      },
+      "schedule_modified": {
+        "title": "Turni modificati",
+        "body": "Il programma pubblicato per la settimana {week} è stato modificato e va ripubblicato."
+      },
+      "schedule_published": {
+        "title": "Programma pubblicato",
+        "body": "Il programma dei turni per la settimana {week} è disponibile."
+      },
+      "schedule_updated": {
+        "title": "Programma aggiornato",
+        "body": "Il programma per la settimana {week} è stato aggiornato (versione {version}). Controlla i tuoi turni."
+      },
+      "schedule_publish_confirmed": {
+        "title": "Pubblicazione completata",
+        "body": "Programma per la settimana {week} pubblicato (versione {version}). Ora puoi condividerlo con il gruppo."
+      },
+      "open_shift_posted": {
+        "title": "Nuovo turno aperto",
+        "body": "C'è un turno libero: {when}. Puoi richiederlo dal calendario."
+      },
+      "shift_request_received": {
+        "title": "Nuova richiesta di turno",
+        "body": "{name} ha {kind, select, take {richiesto il turno aperto} other {offerto la sua disponibilità}}: {when}."
+      },
+      "shift_request_approved": {
+        "title": "Richiesta approvata",
+        "body": "Un amministratore ha confermato il tuo turno: {when}."
+      },
+      "shift_request_rejected": {
+        "title": "Richiesta non accolta",
+        "body": "La tua richiesta per {when} non è stata accolta."
+      },
+      "shift_assigned": {
+        "title": "Nuovo turno assegnato",
+        "body": "Ti è stato assegnato un turno: {when}."
+      },
+      "shift_changed": {
+        "title": "Turno modificato",
+        "body": "Il tuo turno è stato modificato: ora {when}."
+      },
+      "shift_removed": {
+        "title": "Turno annullato",
+        "body": "Il tuo turno è stato annullato: {when}."
+      },
+      "availability_review_confirmed": {
+        "title": "Disponibilità confermata",
+        "body": "Un amministratore ha confermato la tua disponibilità per la settimana {week}."
+      },
+      "availability_changes_requested": {
+        "title": "Modifiche richieste",
+        "body": "Un amministratore chiede modifiche alla tua disponibilità per la settimana {week}: {note}"
+      }
+    },
+    "soundOn": "Suono attivo (clic per disattivare)",
+    "soundOff": "Suono disattivato (clic per attivare)",
+    "dismiss": "Chiudi notifica"
+  },
+  "availability": {
+    "title": "La tua disponibilità",
+    "deadline": "Da inviare entro {date}",
+    "openRequests": "Richieste di disponibilità",
+    "noOpenRequests": "Nessuna richiesta aperta al momento.",
+    "loadError": "Impossibile caricare le richieste.",
+    "statusSubmitted": "Inviata",
+    "statusDraft": "Bozza salvata, non ancora inviata",
+    "statusNotSent": "Non ancora inviata",
+    "submitCta": "INVIA DISPONIBILITÀ",
+    "update": "Aggiorna disponibilità",
+    "closedNotice": "Questa richiesta è chiusa: non è più possibile modificare la disponibilità.",
+    "progress": "{done} di {total} giorni compilati",
+    "available": "Disponibile",
+    "unavailable": "Non disponibile",
+    "from": "Dalle",
+    "to": "Alle",
+    "nextDay": "fino al giorno dopo",
+    "addInterval": "Aggiungi fascia oraria",
+    "removeInterval": "Rimuovi fascia oraria",
+    "dayNote": "Nota per questo giorno (facoltativa)",
+    "weekNote": "Note per la settimana (facoltative)",
+    "saveDraft": "Salva bozza",
+    "submit": "Invia disponibilità",
+    "draftSaved": "Bozza salvata. Ricorda di inviarla.",
+    "submittedConfirm": "Disponibilità inviata. Grazie! Puoi modificarla finché la richiesta resta aperta.",
+    "issues": {
+      "unanswered": "Scegli se sei disponibile.",
+      "noWindows": "Aggiungi almeno una fascia oraria.",
+      "sameTime": "Inizio e fine non possono coincidere.",
+      "overlap": "Le fasce orarie si sovrappongono."
+    },
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "request_exists": "Esiste già una richiesta per questa settimana.",
+      "request_not_open": "La richiesta non è aperta.",
+      "request_not_draft": "La richiesta è già stata inviata.",
+      "overlap": "Ci sono fasce orarie sovrapposte.",
+      "incomplete": "Compila tutti i giorni e le fasce orarie prima di inviare.",
+      "already_submitted": "Hai già inviato: usa «Aggiorna disponibilità».",
+      "day_out_of_week": "Giorno fuori dalla settimana richiesta.",
+      "duplicate_day": "Giorno duplicato.",
+      "invalid_input": "Controlla i dati inseriti.",
+      "unknown": "Qualcosa è andato storto. Riprova.",
+      "not_submitted": "Il dipendente non ha ancora inviato la disponibilità.",
+      "note_required": "Scrivi una nota per chiedere modifiche.",
+      "not_found": "Disponibilità non trovata."
+    },
+    "admin": {
+      "title": "Gestione disponibilità",
+      "newRequest": "Nuova richiesta",
+      "week": "Settimana",
+      "deadline": "Scadenza",
+      "message": "Messaggio (facoltativo)",
+      "messageHint": "es. Ci servono più persone nel weekend",
+      "sendNow": "Invia a tutti i dipendenti",
+      "saveDraft": "Salva come bozza",
+      "noFreeWeeks": "Tutte le prossime settimane hanno già una richiesta.",
+      "requests": "Richieste",
+      "noRequests": "Nessuna richiesta ancora.",
+      "loadError": "Impossibile caricare le richieste.",
+      "status": {
+        "draft": "Bozza",
+        "open": "Aperta",
+        "closed": "Chiusa"
+      },
+      "close": "Chiudi richiesta",
+      "confirmClose": "Chiudere la richiesta? I dipendenti non potranno più modificare la disponibilità.",
+      "deadlineLabel": "scadenza {date}",
+      "completion": "Completamento",
+      "submittedOf": "{done} di {total} dipendenti hanno inviato",
+      "noEmployees": "Non ci sono dipendenti attivi.",
+      "state": {
+        "submitted": "Inviata",
+        "draft": "In bozza",
+        "pending": "In attesa"
+      },
+      "views": "Viste",
+      "viewWeek": "Settimana",
+      "employee": "Dipendente"
+    },
+    "reviewState": {
+      "pending": "Inviata · in attesa di conferma da un amministratore",
+      "confirmed": "Confermata da un amministratore",
+      "changes_requested": "Un amministratore chiede delle modifiche"
+    },
+    "reviewPendingHint": "Puoi ancora modificarla finché la richiesta è aperta: tornerà in attesa di conferma.",
+    "reviseCta": "Modifica disponibilità",
+    "review": {
+      "state": {
+        "pending": "{name} ha inviato la disponibilità: aspetta la tua conferma.",
+        "confirmed": "Disponibilità di {name} confermata.",
+        "changes_requested": "Hai chiesto modifiche a {name}: aspetta che le faccia."
+      },
+      "confirm": "Conferma disponibilità",
+      "requestChanges": "Chiedi modifiche",
+      "notePlaceholder": "Nota (obbligatoria se chiedi modifiche)",
+      "short": {
+        "pending": "Da confermare",
+        "confirmed": "Confermata",
+        "changes_requested": "Modifiche richieste"
+      },
+      "waiting": "{count, plural, one {# disponibilità} other {# disponibilità}} da confermare.",
+      "reviewNow": "Rivedi ora"
+    }
+  },
+  "schedule": {
+    "title": "Calendario turni",
+    "week": "Settimana",
+    "month": "Mese",
+    "today": "Oggi",
+    "prev": "Precedente",
+    "next": "Successivo",
+    "views": "Vista",
+    "filter": "Dipendenti",
+    "newShift": "Nuovo turno",
+    "editShift": "Modifica turno",
+    "employee": "Dipendente",
+    "date": "Data",
+    "from": "Dalle",
+    "to": "Alle",
+    "position": "Ruolo",
+    "notes": "Note",
+    "save": "Salva turno",
+    "saving": "Salvataggio…",
+    "delete": "Elimina",
+    "confirmDelete": "Eliminare questo turno?",
+    "cancel": "Annulla",
+    "nextDay": "termina il giorno dopo",
+    "noEmployees": "Aggiungi almeno un dipendente attivo per creare turni.",
+    "loadError": "Impossibile caricare i turni.",
+    "status": {
+      "none": "Nessun turno",
+      "draft": "Bozza",
+      "published": "Pubblicato",
+      "publishedChanges": "Pubblicato, con modifiche non pubblicate"
+    },
+    "count": "{count, plural, one {# persona} other {# persone}}",
+    "openWeek": "Apri la settimana",
+    "override": {
+      "outside": "Questo turno è fuori dalla disponibilità inviata dal dipendente.",
+      "no_submission": "Il dipendente non ha ancora inviato la disponibilità per questa settimana.",
+      "note": "Motivo (facoltativo)",
+      "confirm": "Salva comunque",
+      "hint": "Se prosegui, la deroga verrà registrata nel registro attività."
+    },
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid_input": "Controlla i dati inseriti.",
+      "invalid_employee": "Dipendente non valido o non attivo.",
+      "overlap": "Questo dipendente ha già un turno che si sovrappone.",
+      "not_found": "Turno non trovato.",
+      "unknown": "Qualcosa è andato storto. Riprova.",
+      "outside_hours": "Orario non consentito: i turni vanno dalle 07:00 alle 02:00 del giorno dopo.",
+      "not_open": "Questo turno non è più disponibile.",
+      "already_requested": "Hai già inviato una richiesta per questo orario.",
+      "already_decided": "Richiesta già gestita.",
+      "in_the_past": "Non puoi proporre un orario già passato."
+    },
+    "summary": {
+      "title": "Riepilogo settimana",
+      "hoursPerEmployee": "Ore per dipendente",
+      "hoursPerDay": "Ore per giorno",
+      "shifts": "Turni",
+      "hours": "Ore",
+      "total": "Totale",
+      "warnings": "Avvisi",
+      "noWarnings": "Nessun avviso.",
+      "noShifts": "Nessun turno in questa settimana."
+    },
+    "warnings": {
+      "overlap": "{name}: turni sovrapposti.",
+      "outside_availability": "{name}: un turno è fuori dalla disponibilità inviata.",
+      "no_submission": "{name}: nessuna disponibilità inviata per questa settimana.",
+      "overridden": "{name}: turno fuori disponibilità (deroga registrata).",
+      "long_shift": "{name}: turno molto lungo ({hours} ore).",
+      "weekly_hours": "{name}: {hours} ore in settimana, sopra la soglia impostata.",
+      "no_shifts": "{name} non ha turni questa settimana."
+    },
+    "reviewPublish": "Rivedi e pubblica",
+    "history": "Cronologia",
+    "days": "Giorno",
+    "nobody": "Nessuno",
+    "addOnDay": "Aggiungi un turno il {day}",
+    "timelineHint": "Orario dalle {open} alle {close} del giorno dopo. Clicca uno spazio vuoto per aggiungere un turno, trascina un turno per spostarlo, trascina il bordo destro per cambiare la fine.",
+    "hoursLimit": "I turni possono iniziare dalle {open} e finire entro le {close} del giorno dopo.",
+    "myHours": "Le tue ore questa settimana: {hours}",
+    "noMyShifts": "Non hai turni questa settimana.",
+    "teamCalendar": "Calendario della squadra",
+    "employeeHint": "Stesso calendario degli amministratori, aggiornato in tempo reale (orario {open}–{close} del giorno dopo). Clicca un turno aperto per richiederlo.",
+    "openShift": "Turno aperto",
+    "openSlots": "{count, plural, one {# posto} other {# posti}}",
+    "openShiftOption": "Turno aperto (da assegnare)",
+    "slots": "Posti disponibili",
+    "openShiftHint": "I dipendenti vengono avvisati e possono richiederlo; tu confermi chi lo prende.",
+    "selectedShift": "Turno selezionato",
+    "close": "Chiudi",
+    "cancelOpen": "Annulla turno aperto",
+    "confirmCancelOpen": "Annullare questo turno aperto? Le richieste in attesa verranno rifiutate.",
+    "requestShift": "Richiedi questo turno",
+    "requestNote": "Nota (facoltativa)",
+    "requestSent": "Richiesta inviata: un amministratore deve confermarla.",
+    "offerCta": "Proponi la mia disponibilità",
+    "offerTitle": "Proponi la tua disponibilità",
+    "offerIntro": "Indica quando puoi lavorare. Il turno verrà creato solo se un amministratore lo conferma.",
+    "offerSend": "Invia proposta",
+    "offerSent": "Proposta inviata: un amministratore deve confermarla."
+  },
+  "publish": {
+    "reviewTitle": "Revisione del programma",
+    "conflicts": "Conflitti di disponibilità",
+    "withoutShifts": "Senza turni",
+    "noShiftsDay": "Nessun turno.",
+    "publishCta": "CONFERMA E PUBBLICA IL PROGRAMMA",
+    "republishCta": "PUBBLICA LE MODIFICHE",
+    "publishing": "Pubblicazione…",
+    "confirm": "Pubblicare il programma? Tutti i dipendenti riceveranno una notifica.",
+    "confirmWithWarnings": "Ci sono {count, plural, one {# avviso} other {# avvisi}} non risolti. Pubblicare comunque? Tutti i dipendenti riceveranno una notifica.",
+    "published": "Programma pubblicato (versione {version}). I dipendenti sono stati avvisati.",
+    "viewVersions": "Vedi la cronologia delle versioni",
+    "alreadyPublished": "Questo programma è già pubblicato e senza modifiche.",
+    "nothingToPublishEmpty": "Aggiungi almeno un turno prima di pubblicare.",
+    "historyTitle": "Cronologia versioni",
+    "noVersions": "Nessuna versione pubblicata per questa settimana.",
+    "version": "Versione {version}",
+    "current": "Attuale",
+    "shiftCount": "{count, plural, one {# turno} other {# turni}}",
+    "diff": "{added} aggiunti, {removed} rimossi, {changed} modificati",
+    "teamSchedule": "Programma della squadra",
+    "weekNav": "Navigazione settimane",
+    "prevWeek": "Settimana precedente",
+    "nextWeek": "Settimana successiva",
+    "thisWeek": "Questa settimana",
+    "notPublished": "Il programma di questa settimana non è ancora stato pubblicato.",
+    "loadError": "Impossibile caricare il programma.",
+    "myHours": "Le tue ore questa settimana: {hours}",
+    "noMyShifts": "Non hai turni questa settimana.",
+    "you": "tu",
+    "versionInfo": "Versione {version}, pubblicata il {date}",
+    "errors": {
+      "forbidden": "Non hai i permessi per pubblicare.",
+      "schedule_not_found": "Nessun programma per questa settimana.",
+      "nothing_to_publish": "Non ci sono modifiche da pubblicare.",
+      "empty_schedule": "Aggiungi almeno un turno prima di pubblicare.",
+      "invalid_input": "Settimana non valida.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    },
+    "shareWhatsApp": "Condividi nel gruppo WhatsApp →"
+  },
+  "whatsapp": {
+    "title": "Condividi nel gruppo WhatsApp dello staff",
+    "manualNote": "L'app non invia nulla a WhatsApp. Copia il messaggio, apri WhatsApp Web, scegli il gruppo Horti Magici esistente, incolla e invia tu stesso.",
+    "language": "Lingua del messaggio",
+    "prepare": "Prepara messaggio",
+    "messagePreview": "Anteprima del messaggio",
+    "copyCta": "COPIA IL PROGRAMMA SETTIMANALE",
+    "openCta": "APRI WHATSAPP WEB",
+    "confirmCta": "Ho inviato il messaggio",
+    "copied": "Messaggio copiato negli appunti.",
+    "copyFailed": "Impossibile copiare automaticamente: seleziona il testo e copialo a mano.",
+    "confirmPrompt": "Confermi di aver inviato tu questo messaggio nel gruppo WhatsApp? L'app non può verificarlo.",
+    "stepPrepared": "✓ Messaggio preparato",
+    "stepCopyPending": "○ Non ancora copiato",
+    "stepCopied": "✓ Copiato il {date}",
+    "stepOpenPending": "○ WhatsApp Web non ancora aperto da qui",
+    "stepOpened": "✓ WhatsApp Web aperto il {date}",
+    "stepConfirmPending": "○ Invio non ancora confermato",
+    "stepConfirmed": "✓ Invio confermato a mano da {name} il {date}",
+    "manualDisclaimer": "Conferma manuale: WhatsApp non ha verificato la consegna.",
+    "you": "te",
+    "newMessage": "Prepara un nuovo messaggio",
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "not_published": "Pubblica prima il programma.",
+      "not_found": "Messaggio non trovato.",
+      "already_confirmed": "Invio già confermato.",
+      "invalid_input": "Dati non validi.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "requests": {
+    "title": "Richieste dei dipendenti",
+    "intro": "Un dipendente può solo chiedere: il turno viene creato quando lo confermi tu.",
+    "pending": "In attesa",
+    "history": "Storico",
+    "nonePending": "Nessuna richiesta in attesa.",
+    "noneHistory": "Nessuna richiesta gestita.",
+    "loadError": "Impossibile caricare le richieste.",
+    "kind": {
+      "take": "Richiede un turno aperto",
+      "offer": "Offre la sua disponibilità"
+    },
+    "status": {
+      "pending": "In attesa",
+      "approved": "Approvata",
+      "rejected": "Rifiutata",
+      "cancelled": "Ritirata"
+    },
+    "approve": "Approva e crea il turno",
+    "reject": "Rifiuta",
+    "replyNote": "Nota per il dipendente (facoltativa)",
+    "mine": "Le mie richieste",
+    "withdraw": "Ritira",
+    "withdrawFailed": "Impossibile ritirare la richiesta."
+  }
+}
