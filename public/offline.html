@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#234A49">
+  <title>Horti Magici · Offline</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; min-height: 100dvh; display: grid; place-items: center; padding: 24px; box-sizing: border-box;
+      font: 16px/1.5 system-ui, sans-serif; background: #F7F2E8; color: #1d2b2a; text-align: center; }
+    @media (prefers-color-scheme: dark) { body { background: #142524; color: #F7F2E8; } }
+    main { max-width: 26rem; }
+    h1 { font: 500 2rem Georgia, serif; color: #234A49; margin: 0 0 .5rem; }
+    @media (prefers-color-scheme: dark) { h1 { color: #E8B64A; } }
+    button { margin-top: 1.25rem; height: 44px; padding: 0 28px; border: 0; border-radius: 999px; background: #234A49; color: #F7F2E8; font: inherit; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sei offline</h1>
+    <p>Non riesco a raggiungere Horti Magici. Controlla la connessione e riprova.</p>
+    <p lang="en">You are offline. Check your connection and try again.</p>
+    <button onclick="location.reload()">Riprova · Retry</button>
+  </main>
+</body>
+</html>

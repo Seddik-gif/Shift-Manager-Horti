@@ -38,14 +38,14 @@ describe("live calendar for employees", () => {
     expect(await as(ids.marco, () => q(`select 1 from public.shifts`))).toHaveLength(0); // base table stays admin-only
   });
 
-  it("bumps the week pulse and notifies the person whose shift is created, moved and removed", async () => {
+  it("bumps the week pulse and collects shift changes instead of notifying (see db-shift-notices.test.ts)", async () => {
     expect(await q(`select 1 from public.schedule_pulse`)).toHaveLength(1);
-    expect(await q(`select 1 from public.notifications where user_id = $1 and type = 'shift_assigned'`, [ids.giulia])).toHaveLength(1);
+    expect(await q(`select 1 from public.notifications where user_id = $1 and type = 'shift_assigned'`, [ids.giulia])).toHaveLength(0);
+    expect(await q(`select kind from public.pending_shift_notices where employee_id = $1`, [ids.giulia])).toEqual([{ kind: "assigned" }]);
     const [{ id }] = await q<{ id: string }>(`select id from public.shifts`);
     await as(ids.stefano, () => q(`select public.save_shift($1, $2, $3, '11:00', '19:00', 'Bar', '', false, '')`, [id, ids.giulia, D1]));
-    expect(await q(`select 1 from public.notifications where user_id = $1 and type = 'shift_changed'`, [ids.giulia])).toHaveLength(1);
-    await as(ids.stefano, () => q(`select public.delete_shift($1)`, [id]));
-    expect(await q(`select 1 from public.notifications where user_id = $1 and type = 'shift_removed'`, [ids.giulia])).toHaveLength(1);
+    await as(ids.stefano, () => q(`select public.delete_shift($1)`, [id])); // never announced, so nothing is left to announce
+    expect(await q(`select 1 from public.pending_shift_notices`)).toHaveLength(0);
     expect(await as(ids.marco, () => q(`select 1 from public.team_shifts`))).toHaveLength(0);
   });
 });

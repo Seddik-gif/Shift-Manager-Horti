@@ -1,0 +1,15 @@
+{
+  "name": "horti-magici-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Windows desktop shell (Tauri) for the Horti Magici admin app",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "icons": "tauri icon icon-source.png"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

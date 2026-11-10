@@ -3,6 +3,7 @@
 import { redirect } from "@/i18n/navigation";
 import { isLocale, type Locale } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
+import { loginIdDomain, resolveLoginId } from "@/lib/auth/login-id";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { loginSchema, setPasswordSchema } from "@/lib/validation/auth";
 import { homeFor } from "./guards";
@@ -23,8 +24,9 @@ function fieldErrorsOf(issues: { path: PropertyKey[]; message: string }[]): Reco
 
 export async function signIn(locale: Locale, _prev: FormState, formData: FormData): Promise<FormState> {
   if (!isSupabaseConfigured()) return { error: "notConfigured" };
+  const rawId = formData.get("email");
   const parsed = loginSchema.safeParse({
-    email: formData.get("email"),
+    email: typeof rawId === "string" ? resolveLoginId(rawId, loginIdDomain()) : rawId,
     password: formData.get("password"),
   });
   if (!parsed.success) return { fieldErrors: fieldErrorsOf(parsed.error.issues) };

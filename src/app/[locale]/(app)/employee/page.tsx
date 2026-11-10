@@ -8,6 +8,7 @@ import { formatWindow, nowMs, romeDay } from "@/lib/time/rome";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { RealtimeRefresh } from "@/components/layout/realtime-refresh";
+import { PushCard } from "@/components/pwa/push-card";
 import type { Locale } from "@/i18n/routing";
 
 interface Req { id: string; week_start: string; deadline: string; availability_submissions: { status: "draft" | "submitted"; review_status: "pending" | "confirmed" | "changes_requested"; review_note: string | null }[] }
@@ -49,6 +50,8 @@ export default async function EmployeeDashboard({ params }: PageProps<"/[locale]
         <h1 className="font-display text-4xl font-medium text-brand">{t("greeting", { name: profile.first_name })}</h1>
         <p className="mt-1 text-ink-soft">{t("subtitle")}</p>
       </div>
+
+      <PushCard />
 
       <section aria-label={ta("openRequests")} className="space-y-3">
         <h2 className="font-display text-2xl text-brand">{ta("openRequests")}</h2>

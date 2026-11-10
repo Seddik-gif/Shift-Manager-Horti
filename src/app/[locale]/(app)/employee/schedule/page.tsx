@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { RealtimeRefresh } from "@/components/layout/realtime-refresh";
 import { ScheduleCalendar, type CalEvent } from "@/components/schedule/schedule-calendar";
 import { requireEmployee } from "@/lib/auth/guards";
+import { getLocationContext } from "@/lib/locations/active";
 import { createClient } from "@/lib/supabase/server";
 import { weekRangeLabel } from "@/lib/format/week";
 import { parseShiftHours } from "@/lib/scheduling/shift-hours";
@@ -31,6 +32,8 @@ export default async function EmployeeSchedulePage({ params, searchParams }: Pag
   const t = await getTranslations("schedule");
   const format = await getFormatter();
   const supabase = await createClient();
+  const { active } = await getLocationContext();
+  if (!active) return <p className="rounded-[var(--radius-card)] bg-paper p-6 text-ink-soft">{(await getTranslations("locations"))("noneEmployee")}</p>;
 
   const view = sp.view === "month" ? "month" : "week";
   const date = typeof sp.date === "string" && DAY_RE.test(sp.date) ? sp.date : todayInRome();
@@ -40,9 +43,9 @@ export default async function EmployeeSchedulePage({ params, searchParams }: Pag
   const rangeEnd = romeInstant(addDays(gridStart, view === "week" ? 7 : 42), "00:00").toISOString();
 
   const [shiftsRes, openRes, dirRes, hoursRes, reqRes] = await Promise.all([
-    supabase.from("team_shifts").select("id, employee_id, employee_name, color, job_position, starts_at, ends_at")
+    supabase.from("team_shifts").select("id, employee_id, employee_name, color, job_position, starts_at, ends_at").eq("location_id", active.id)
       .gte("starts_at", rangeStart).lt("starts_at", rangeEnd).order("starts_at").returns<TeamShift[]>(),
-    supabase.from("open_shifts").select("id, starts_at, ends_at, job_position, note, slots").eq("status", "open")
+    supabase.from("open_shifts").select("id, starts_at, ends_at, job_position, note, slots").eq("status", "open").eq("location_id", active.id)
       .gte("starts_at", rangeStart).lt("starts_at", rangeEnd)
       .returns<{ id: string; starts_at: string; ends_at: string; job_position: string | null; note: string | null; slots: number }[]>(),
     supabase.from("team_directory").select("id, first_name, last_name, job_position, color, is_active").order("first_name")
@@ -83,7 +86,7 @@ export default async function EmployeeSchedulePage({ params, searchParams }: Pag
   const title = view === "week"
     ? weekRangeLabel(weekStart, locale)
     : new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${date.slice(0, 7)}-15T12:00:00Z`));
-  const pill = (on: boolean) => cn("rounded-full px-4 py-2 text-sm font-medium", on ? "bg-brand text-ivory" : "bg-mist text-ink-soft hover:text-ink");
+  const pill = (on: boolean) => cn("rounded-full px-3 py-2.5 text-sm font-medium sm:px-4 sm:py-2", on ? "bg-brand text-ivory" : "bg-mist text-ink-soft hover:text-ink");
 
   return (
     <div className="space-y-6">
@@ -96,10 +99,11 @@ export default async function EmployeeSchedulePage({ params, searchParams }: Pag
           <h1 className="font-display text-4xl font-medium text-brand">{t("teamCalendar")}</h1>
           <p className="text-lg capitalize">{title}</p>
         </div>
-        <nav className="flex flex-wrap items-center gap-2" aria-label={t("views")}>
+        <nav className="flex flex-wrap items-center gap-1.5 sm:gap-2" aria-label={t("views")}>
           <Link href={base("week", date)} className={pill(view === "week")}>{t("week")}</Link>
           <Link href={base("month", date)} className={pill(view === "month")}>{t("month")}</Link>
-          <span className="mx-1 h-6 w-px bg-brand/15" aria-hidden />
+          <span className="mx-1 hidden h-6 w-px bg-brand/15 sm:block" aria-hidden />
+          <a href={`/api/calendar/my-shifts?lang=${locale}`} className={pill(false)} download>📅 {t("addToCalendar")}</a>
           <Link href={base(view, prev)} className={pill(false)} aria-label={t("prev")}>‹</Link>
           <Link href={base(view, todayInRome())} className={pill(false)}>{t("today")}</Link>
           <Link href={base(view, next)} className={pill(false)} aria-label={t("next")}>›</Link>
@@ -115,6 +119,7 @@ export default async function EmployeeSchedulePage({ params, searchParams }: Pag
       {shiftsRes.error ? <p role="alert" className="text-danger">{t("loadError")}</p> : (
         <ScheduleCalendar
           mode="employee"
+          locationId={active.id}
           view={view}
           date={view === "week" ? weekStart : date}
           events={events}

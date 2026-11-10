@@ -60,7 +60,7 @@ describe("shift management", () => {
     expect(await save(ids.stefano, { emp: ids.giulia, day: "2026-11-17", s: "10:00", e: "14:00" })).toEqual({ ok: false, warning: "no_submission" });
     const free = await save(ids.stefano, { emp: ids.giulia, day: "2026-12-09", s: "10:00", e: "22:00" });
     expect(free.ok).toBe(true);
-    expect(free.warnings?.map((w) => w.type)).toContain("long_shift"); // 12h > the configured 10h
+    expect(free.warnings ?? []).toEqual([]); // shift length is not limited
   });
 
   it("accepts a shift covered by the submitted window", async () => {

@@ -20,7 +20,7 @@ const WHATSAPP_WEB = "https://web.whatsapp.com/";
  * Manual sharing to the EXISTING staff group. This panel never sends anything: the admin copies the
  * text, opens WhatsApp Web themselves, pastes it in the group, and then states that they sent it.
  */
-export function WhatsAppPanel({ weekStart, initial }: { weekStart: string; initial: ShareState | null }) {
+export function WhatsAppPanel({ weekStart, initial, locationId }: { weekStart: string; initial: ShareState | null; locationId: string }) {
   const t = useTranslations("whatsapp");
   const uiLocale = useLocale() as "it" | "en";
   const [lang, setLang] = useState<"it" | "en">(uiLocale);
@@ -34,7 +34,7 @@ export function WhatsAppPanel({ weekStart, initial }: { weekStart: string; initi
     setError(null);
     setNotice(null);
     startTransition(async () => {
-      const res = await prepareShare(weekStart, lang);
+      const res = await prepareShare(weekStart, lang, locationId);
       if (!res.ok) return setError(res.error);
       setShare({ id: res.id, message: res.message, copiedAt: null, openedAt: null, confirmedAt: null, confirmedBy: null });
     });

@@ -9,8 +9,8 @@ import { offerShift } from "@/lib/scheduling/requests-actions";
 import { isWithinHours, toMin, type ShiftHours } from "@/lib/scheduling/shift-hours";
 
 /** Employee: offer a time to work. Nothing is scheduled until an admin approves it. */
-export function OfferDialog({ open, defaultDay, hours, onClose, onSent }: {
-  open: boolean; defaultDay: string; hours: ShiftHours; onClose: () => void; onSent: () => void;
+export function OfferDialog({ open, defaultDay, hours, locationId, onClose, onSent }: {
+  open: boolean; defaultDay: string; hours: ShiftHours; locationId?: string; onClose: () => void; onSent: () => void;
 }) {
   const t = useTranslations("schedule");
   const ref = useRef<HTMLDialogElement>(null);
@@ -41,7 +41,7 @@ export function OfferDialog({ open, defaultDay, hours, onClose, onSent }: {
   function send() {
     setError(null);
     startTransition(async () => {
-      const res = await offerShift({ day, start, end, note });
+      const res = await offerShift({ day, start, end, note, locationId });
       if (res.ok) onSent();
       else setError(res.error);
     });
@@ -49,7 +49,7 @@ export function OfferDialog({ open, defaultDay, hours, onClose, onSent }: {
 
   return (
     <dialog ref={ref} onClose={onClose} aria-labelledby="offer-title"
-      className="m-auto w-[min(30rem,calc(100vw-1.5rem))] rounded-[var(--radius-card)] bg-paper p-0 text-ink shadow-xl backdrop:bg-ink/40">
+      className="m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-b-none rounded-t-3xl sm:m-auto sm:max-h-[90dvh] sm:w-[min(30rem,calc(100vw-1.5rem))] sm:rounded-[var(--radius-card)] bg-paper p-0 text-ink shadow-xl backdrop:bg-ink/40">
       <form method="dialog" onSubmit={(e) => { e.preventDefault(); send(); }} className="space-y-4 p-6">
         <h2 id="offer-title" className="font-display text-3xl text-brand">{t("offerTitle")}</h2>
         <p className="text-sm text-ink-soft">{t("offerIntro")}</p>

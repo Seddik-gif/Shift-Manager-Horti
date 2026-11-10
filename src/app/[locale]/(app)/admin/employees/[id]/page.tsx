@@ -6,6 +6,8 @@ import type { Locale } from "@/i18n/routing";
 import type { Profile } from "@/types/database";
 import { EmployeeForm } from "../employee-form";
 import { ActiveToggle } from "../active-toggle";
+import { EmployeeLocations } from "../employee-locations";
+import { getLocationContext } from "@/lib/locations/active";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -41,6 +43,9 @@ export default async function EmployeeDetailPage({ params }: PageProps<"/[locale
     .eq("role", "employee")
     .maybeSingle<Profile>();
   if (!employee) notFound();
+
+  const { locations } = await getLocationContext();
+  const { data: assigned } = await supabase.from("employee_locations").select("location_id").eq("employee_id", id).returns<{ location_id: string }[]>();
 
   const [{ data: submissions }, { data: shifts }] = await Promise.all([
     supabase
@@ -91,6 +96,14 @@ export default async function EmployeeDetailPage({ params }: PageProps<"/[locale
             color: employee.color,
             preferredLanguage: employee.preferred_language,
           }}
+        />
+      </section>
+
+      <section className={card}>
+        <EmployeeLocations
+          employeeId={employee.id}
+          locations={locations.map((l) => ({ id: l.id, name: l.name, color: l.color }))}
+          selected={(assigned ?? []).map((a) => a.location_id)}
         />
       </section>
 

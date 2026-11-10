@@ -18,7 +18,7 @@ export interface ShiftDraft {
   position: string;
   notes: string;
   /** set when a drag/resize already hit an availability mismatch */
-  warning?: "outside" | "no_submission" | null;
+  warning?: "outside" | "no_submission" | "absence" | null;
 }
 /** pseudo-employee id meaning "an open shift, to be taken by someone" */
 export const OPEN = "__open__";
@@ -28,15 +28,16 @@ interface Props {
   draft: ShiftDraft | null;
   employees: EmployeeOption[];
   hours: ShiftHours;
+  locationId?: string;
   onClose: () => void;
   onSaved: () => void;
 }
 
-export function ShiftDialog({ draft, employees, hours, onClose, onSaved }: Props) {
+export function ShiftDialog({ draft, employees, hours, locationId, onClose, onSaved }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const t = useTranslations("schedule");
   const [form, setForm] = useState<ShiftDraft | null>(draft);
-  const [warning, setWarning] = useState<"outside" | "no_submission" | null>(null);
+  const [warning, setWarning] = useState<"outside" | "no_submission" | "absence" | null>(null);
   const [overrideNote, setOverrideNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [slots, setSlots] = useState(1);
@@ -79,13 +80,13 @@ export function ShiftDialog({ draft, employees, hours, onClose, onSaved }: Props
     setError(null);
     startTransition(async () => {
       if (isOpen) {
-        const r = await createOpenShift({ day: form.day, start: form.start, end: form.end, position: form.position, note: form.notes, slots });
+        const r = await createOpenShift({ day: form.day, start: form.start, end: form.end, position: form.position, note: form.notes, slots, locationId });
         if (r.ok) return onSaved();
         return setError(r.error);
       }
       const res = await saveShift({
         id: form.id, employeeId: form.employeeId, day: form.day, start: form.start, end: form.end,
-        position: form.position, notes: form.notes, override: warning !== null, overrideNote,
+        position: form.position, notes: form.notes, override: warning !== null, overrideNote, locationId,
       });
       if (res.ok) return onSaved();
       if ("warning" in res) return setWarning(res.warning);
@@ -107,7 +108,7 @@ export function ShiftDialog({ draft, employees, hours, onClose, onSaved }: Props
       ref={ref}
       onClose={onClose}
       aria-labelledby="shift-dialog-title"
-      className="m-auto w-[min(32rem,calc(100vw-1.5rem))] rounded-[var(--radius-card)] bg-paper p-0 text-ink shadow-xl backdrop:bg-ink/40"
+      className="m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto rounded-b-none rounded-t-3xl sm:m-auto sm:max-h-[90dvh] sm:w-[min(32rem,calc(100vw-1.5rem))] sm:rounded-[var(--radius-card)] sm:rounded-b-[var(--radius-card)] bg-paper p-0 text-ink shadow-xl backdrop:bg-ink/40"
     >
       <form method="dialog" onSubmit={(e) => { e.preventDefault(); submit(); }} className="space-y-4 p-6">
         <h2 id="shift-dialog-title" className="font-display text-3xl text-brand">{form.id ? t("editShift") : t("newShift")}</h2>

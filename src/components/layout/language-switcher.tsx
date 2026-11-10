@@ -33,7 +33,7 @@ export function LanguageSwitcher({ signedIn = false }: { signedIn?: boolean }) {
           aria-pressed={l === current}
           lang={l}
           className={cn(
-            "rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide transition-colors",
+            "min-h-9 min-w-10 rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-wide transition-colors",
             l === current ? "bg-brand text-ivory" : "text-ink-soft hover:text-ink",
           )}
           title={t(l)}

@@ -2,9 +2,10 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import type { NavHref } from "./mobile-nav";
 
 export interface NavItem {
-  href: "/admin" | "/admin/employees" | "/admin/availability" | "/admin/schedule" | "/admin/requests" | "/employee" | "/employee/schedule";
+  href: NavHref;
   label: string;
 }
 

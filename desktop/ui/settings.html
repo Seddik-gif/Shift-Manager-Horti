@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impostazioni · Horti Magici</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#F7F2E8; --card:#fff; --ink:#1d2b2a; --brand:#234A49; --soft:#5d6d6b; --line:#cfd8d6; --ok:#1d7a4d; --bad:#b3261e; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#142524; --card:#1c3231; --ink:#F7F2E8; --brand:#E8B64A; --soft:#a9b9b6; --line:#35504e; --ok:#6fd7a0; --bad:#ff8a80; } }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:20px; background:var(--bg); color:var(--ink); font:15px/1.45 system-ui,"Segoe UI",sans-serif; }
+    h1 { font:500 1.8rem Georgia,serif; color:var(--brand); margin:0 0 .25rem; }
+    h2 { font-size:1.05rem; margin:0 0 .5rem; color:var(--brand); }
+    .card { background:var(--card); border-radius:14px; padding:16px; margin-top:14px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+    label { display:block; font-weight:600; margin-top:.75rem; } .hint { color:var(--soft); font-size:.85rem; font-weight:400; }
+    input[type=text], input[type=url], input[type=password], input[type=number] { width:100%; height:42px; margin-top:.3rem; padding:0 12px; border:1px solid var(--line); border-radius:10px; background:transparent; color:var(--ink); font:inherit; }
+    button { height:42px; padding:0 20px; border:0; border-radius:999px; background:var(--brand); color:var(--bg); font:inherit; cursor:pointer; margin:.7rem .4rem 0 0; }
+    button.ghost { background:transparent; color:var(--brand); border:1px solid var(--brand); } button:disabled { opacity:.5; cursor:default; }
+    .row { display:flex; align-items:center; gap:.6rem; margin-top:.75rem; } .row input[type=checkbox] { width:20px; height:20px; }
+    .msg { margin-top:.6rem; font-size:.9rem; min-height:1.2em; } .ok { color:var(--ok); } .bad { color:var(--bad); }
+    code { font-size:.85rem; word-break:break-all; }
+  </style>
+</head>
+<body>
+  <h1>Impostazioni</h1>
+  <p class="hint">Horti Magici · versione desktop per gli amministratori</p>
+
+  <section class="card">
+    <h2>App</h2>
+    <label for="app-url">Indirizzo dell'app <span class="hint">(https://…)</span></label>
+    <input id="app-url" type="url" placeholder="https://horti.esempio.it" autocomplete="off">
+    <button id="save-app">Salva e apri</button><button id="test" class="ghost">Prova connessione</button>
+    <p id="app-msg" class="msg" role="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>Backup</h2>
+    <p class="hint">Fa una copia del database sul tuo PC. L'indirizzo del database contiene una password: viene conservato nel <strong>Gestore credenziali di Windows</strong>, non in un file.</p>
+    <label for="db-url">Indirizzo del database <span id="db-state" class="hint"></span></label>
+    <input id="db-url" type="password" placeholder="postgresql://postgres:PASSWORD@db.xxxx.supabase.co:5432/postgres" autocomplete="off" spellcheck="false">
+    <button id="save-db">Salva in modo sicuro</button><button id="clear-db" class="ghost">Rimuovi</button>
+    <label for="backup-dir">Cartella dei backup <span class="hint">(vuoto = predefinita)</span></label>
+    <input id="backup-dir" type="text" autocomplete="off">
+    <p class="hint">Predefinita: <code id="default-dir"></code></p>
+    <label for="keep">Copie da conservare</label>
+    <input id="keep" type="number" min="1" max="365">
+    <label for="tools">Cartella degli strumenti PostgreSQL <span class="hint">(vuoto = ricerca automatica)</span></label>
+    <input id="tools" type="text" placeholder="C:\Program Files\PostgreSQL\17\bin" autocomplete="off">
+    <button id="save-backup">Salva impostazioni backup</button>
+    <button id="run-backup">Esegui backup ora</button>
+    <p id="backup-msg" class="msg" role="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>Windows</h2>
+    <div class="row"><input id="autostart" type="checkbox"><label for="autostart" style="margin:0">Avvia con Windows (resta nella barra, accanto all'orologio)</label></div>
+    <p class="hint">Chiudendo la finestra il programma resta attivo nell'area di notifica. Per uscire: clic destro sull'icona → Esci.</p>
+  </section>
+
+  <script>
+    const invoke = (cmd, args) => window.__TAURI__.core.invoke(cmd, args);
+    const $ = (id) => document.getElementById(id);
+    const say = (id, text, ok) => { const el = $(id); el.textContent = text; el.className = "msg " + (ok ? "ok" : "bad"); };
+    let busy = false;
+
+    async function load() {
+      const c = await invoke("get_config");
+      $("app-url").value = c.app_url;
+      $("backup-dir").value = c.backup_dir;
+      $("default-dir").textContent = c.default_backup_dir;
+      $("keep").value = c.keep;
+      $("tools").value = c.tools_dir;
+      $("autostart").checked = c.autostart;
+      $("db-state").textContent = c.has_db_secret ? "· salvato ✓" : "· non impostato";
+      $("db-url").value = "";
+    }
+    const saveConfig = () => invoke("save_config", { appUrl: $("app-url").value, backupDir: $("backup-dir").value, keep: Number($("keep").value), toolsDir: $("tools").value });
+
+    $("save-app").onclick = async () => {
+      try { await saveConfig(); await load(); say("app-msg", "Salvato.", true); await invoke("reload_main"); } catch (e) { say("app-msg", String(e), false); }
+    };
+    $("test").onclick = async () => {
+      try { await saveConfig(); await load(); const url = $("app-url").value; say("app-msg", (await invoke("reachable", { url })) ? "Raggiungibile ✓" : "Non raggiungibile: controlla indirizzo e connessione.", await invoke("reachable", { url })); } catch (e) { say("app-msg", String(e), false); }
+    };
+    $("save-db").onclick = async () => {
+      try { await invoke("set_db_secret", { secret: $("db-url").value }); await load(); say("backup-msg", "Salvato nel Gestore credenziali di Windows ✓", true); } catch (e) { say("backup-msg", String(e), false); }
+    };
+    $("clear-db").onclick = async () => { try { await invoke("clear_db_secret"); await load(); say("backup-msg", "Rimosso.", true); } catch (e) { say("backup-msg", String(e), false); } };
+    $("save-backup").onclick = async () => { try { await saveConfig(); await load(); say("backup-msg", "Impostazioni salvate.", true); } catch (e) { say("backup-msg", String(e), false); } };
+    $("autostart").onchange = async (e) => { try { await invoke("set_autostart", { enabled: e.target.checked }); } catch (err) { e.target.checked = !e.target.checked; say("backup-msg", String(err), false); } };
+
+    async function runBackup() {
+      if (busy) return;
+      busy = true; $("run-backup").disabled = true; say("backup-msg", "Backup in corso…", true);
+      try {
+        await saveConfig();
+        const r = await invoke("run_backup");
+        say("backup-msg", `Backup fatto ✓ ${r.size_kb} KB, ${r.objects} oggetti.\n${r.path}` + (r.removed.length ? `\nEliminati ${r.removed.length} backup vecchi.` : ""), true);
+        $("backup-msg").style.whiteSpace = "pre-wrap";
+      } catch (e) { say("backup-msg", String(e), false); }
+      busy = false; $("run-backup").disabled = false;
+    }
+    $("run-backup").onclick = runBackup;
+    window.__TAURI__.event.listen("run-backup", runBackup); // from the tray menu
+    load().catch((e) => say("app-msg", String(e), false));
+  </script>
+</body>
+</html>

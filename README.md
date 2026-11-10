@@ -3,8 +3,11 @@
 Bilingual (IT default / EN) staff management and shift scheduling PWA for Horti Magici.
 Next.js (App Router) · TypeScript · Tailwind v4 · Supabase (Postgres, Auth, Realtime) · next-intl.
 
-> **Status: Phases 1–6 of 7 complete** (… publishing, manual WhatsApp sharing).
-> Final hardening (security review, responsive pass, deployment checks) is not done yet.
+> **Status: all nine phases built.** Scheduling, availability, publishing and manual WhatsApp sharing (1–6 of the first build),
+> plus multiple locations, absences, optional staffing rule, shift swaps, push notifications + PWA, chat, activity log,
+> print view, coverage grid, backups, the Windows admin app, and a security/accessibility hardening pass.
+> Guides: [docs/SECURITY.md](docs/SECURITY.md) · [docs/BACKUP.md](docs/BACKUP.md) · [docs/DESKTOP.md](docs/DESKTOP.md).
+> **Not yet done:** a run against a *hosted* Supabase project, real Resend email and real push on phones (see Known gaps).
 
 ## Setup
 
@@ -74,16 +77,25 @@ allows daily cron jobs, so use a Pro plan or `pg_cron` for hourly runs. Emails a
 
 ## Known gaps
 
+**Verified on a real (local) Supabase stack:** all 19 migrations apply; sign-in as admin and as employee; the admin pages
+(locations, coverage grid, settings, activity log, requests) and the employee pages (dashboard, swaps, absences, chat)
+render with real data under RLS; a chat message with a mention creates the right notifications.
+
+**Still unverified** (needs your accounts or devices):
+
+- A **hosted** Supabase project (the local stack is the same software, but keys, email templates and the Site URL are yours to set).
+- **Resend email** delivery, and **Web Push** on real phones (needs VAPID keys, an https address and an installed PWA; iPhone only works from the Home Screen).
+- The backup/restore scripts and the Windows program's "Back up now" against a real database.
+- Drag/resize in the week calendar and the shift dialog were exercised visually with sample data only.
+
+**Known limits**
+
 - The admin notification "schedule ready for publication" is not implemented (no clear trigger defined yet).
-
-- Shift week view/summary uses `app_settings.scheduling_rules` (long-shift and weekly-hours thresholds are operational warnings, off or 10h by default; no legal limits are encoded).
-- Drag/resize, the shift dialog and the month/week UI were checked visually with sample data only; they have not been exercised end-to-end against a live database.
-
-- The logo file `public/brand/horti-magici-logo.png` was not in the repository; a text wordmark is shown until it is added.
-- No PWA icons / service worker yet (manifest only).
+- The logo file `public/brand/horti-magici-logo.png` was never supplied; a text wordmark and a generated "H" icon are used.
 - Row types in `src/types/database.ts` are hand-written; generate them once a project is linked.
-- Auth flows, Realtime subscriptions, the notification bell and the email sender are untested against a live Supabase/Resend project.
-- Submissions are not blocked after the deadline passes; only the admin closing the request stops edits.
+- Availability submissions are not blocked after the deadline passes; only the admin closing the request stops edits.
+- The Windows installer is not code-signed (SmartScreen warns) and there is no auto-updater.
+- Minimum staffing (optional) is checked for all seven days of the week; there is no "closed day" setting.
 
 ## Deploy (Vercel)
 
@@ -99,6 +111,8 @@ npx supabase start -x studio,imgproxy,vector,edge-runtime,logflare,supavisor   #
 node --env-file=.env.local scripts/seed-local.mjs    # 2 admins + 3 employees; passwords go to .local-test-accounts.json
 npm run dev -- -p 3100
 ```
+Easier local logins: `node --env-file=.env.local scripts/simplify-local-users.mjs` renames every local account to `name@horti.test` with the password `horti`, and
+`LOGIN_ID_DOMAIN=horti.test` in `.env.local` lets you sign in by typing just the name (it only works while Supabase is a local/private address; never on a hosted project).
 Emails (invitations) arrive in the local mailbox at http://127.0.0.1:54424. Stop with `npx supabase stop`.
 
 ### Live calendar (admin and employees)

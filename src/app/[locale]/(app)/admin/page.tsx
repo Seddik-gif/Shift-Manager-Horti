@@ -2,12 +2,14 @@ import { getFormatter, getTranslations, setRequestLocale } from "next-intl/serve
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { requireAdmin } from "@/lib/auth/guards";
+import { getLocationContext } from "@/lib/locations/active";
 import { createClient } from "@/lib/supabase/server";
 import { completionPercent } from "@/lib/availability/logic";
 import { weekRangeLabel } from "@/lib/format/week";
 import { loadWeek } from "@/lib/scheduling/load-week";
 import { addDays, mondayOf, todayInRome } from "@/lib/time/rome";
 import { RealtimeRefresh } from "@/components/layout/realtime-refresh";
+import { PushCard } from "@/components/pwa/push-card";
 import type { Locale } from "@/i18n/routing";
 
 export default async function AdminDashboard({ params }: PageProps<"/[locale]/admin">) {
@@ -19,6 +21,7 @@ export default async function AdminDashboard({ params }: PageProps<"/[locale]/ad
 
   // Real data only: the count comes straight from the database (RLS: admin).
   const supabase = await createClient();
+  const { active } = await getLocationContext();
   const { count, error } = await supabase
     .from("profiles")
     .select("id", { count: "exact", head: true })
@@ -49,6 +52,7 @@ export default async function AdminDashboard({ params }: PageProps<"/[locale]/ad
   const { data: schedRows } = await supabase
     .from("weekly_schedules")
     .select("week_start, status, has_unpublished_changes, shifts(count)")
+    .eq("location_id", active?.id ?? "")
     .gte("week_start", addDays(mondayOf(todayInRome()), -7))
     .order("week_start")
     .returns<{ week_start: string; status: "draft" | "published"; has_unpublished_changes: boolean; shifts: { count: number }[] }[]>();
@@ -56,14 +60,15 @@ export default async function AdminDashboard({ params }: PageProps<"/[locale]/ad
   const { data: recent } = await supabase
     .from("weekly_schedules")
     .select("week_start, published_at, current_version")
+    .eq("location_id", active?.id ?? "")
     .eq("status", "published")
     .order("published_at", { ascending: false })
     .limit(3)
     .returns<{ week_start: string; published_at: string; current_version: number }[]>();
   const { count: pendingRequests } = await supabase.from("shift_requests").select("id", { count: "exact", head: true }).eq("status", "pending");
   let warningCount = 0;
-  if (drafts[0]) {
-    const w = await loadWeek(supabase, drafts[0].week_start);
+  if (drafts[0] && active) {
+    const w = await loadWeek(supabase, drafts[0].week_start, active.id);
     warningCount = w.analysis.warnings.filter((x) => x.type !== "overridden" && x.type !== "no_shifts").length;
   }
 
@@ -79,6 +84,8 @@ export default async function AdminDashboard({ params }: PageProps<"/[locale]/ad
         </h1>
         <p className="mt-1 text-ink-soft">{t("subtitle")}</p>
       </div>
+
+      <PushCard />
 
       <section aria-label={t("quickActions")} className="flex flex-wrap gap-3">
         <Button asChild>

@@ -1,6 +1,7 @@
 import "server-only";
 import { after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { dispatchPush } from "@/lib/push/send";
 import { renderNotification } from "./render";
 
 export type DispatchSummary =
@@ -83,13 +84,22 @@ export async function dispatchEmails(): Promise<DispatchSummary> {
   return { status: "done", attempted, sent, failed };
 }
 
-/** Send any pending emails right after the response, so people are not kept waiting for the cron job. */
+/**
+ * Deliver new notifications right after the response: push first (it is time-sensitive), then email.
+ * The name is historical. Each channel is isolated, so a failure in one never affects the user action or the other
+ * channel; the cron job retries email.
+ */
 export function emailSoon() {
   after(async () => {
     try {
+      await dispatchPush();
+    } catch {
+      /* push is best-effort */
+    }
+    try {
       await dispatchEmails();
     } catch {
-      /* never let email problems affect the user action; the cron job retries */
+      /* the cron job retries */
     }
   });
 }

@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Only the two local windows (loading page and settings) may talk to the shell. The hosted web app that opens inside the main window gets NO access to it.",
+  "windows": ["main", "settings"],
+  "permissions": ["core:default"]
+}

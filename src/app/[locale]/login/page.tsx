@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Logo } from "@/components/brand/logo";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { loginIdDomain } from "@/lib/auth/login-id";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import type { Locale } from "@/i18n/routing";
 import { LoginForm } from "./login-form";
@@ -24,7 +25,7 @@ export default async function LoginPage({ params }: PageProps<"/[locale]/login">
           <h1 className="font-display text-3xl font-medium text-brand">{t("title")}</h1>
           <p className="mt-1 text-sm text-ink-soft">{t("subtitle")}</p>
           {configured ? (
-            <LoginForm locale={locale} />
+            <LoginForm locale={locale} shortId={loginIdDomain() !== null} />
           ) : (
             <p role="status" className="mt-6 rounded-xl bg-brand-soft p-4 text-sm text-brand">
               {t("notConfigured")}

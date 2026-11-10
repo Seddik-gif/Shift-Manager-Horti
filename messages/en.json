@@ -10,7 +10,9 @@
     "signOut": "Sign out",
     "language": "Language",
     "today": "Today",
-    "genericError": "Something went wrong. Please try again."
+    "genericError": "Something went wrong. Please try again.",
+    "skipToContent": "Skip to content",
+    "close": "Close"
   },
   "languages": {
     "it": "Italiano",
@@ -26,7 +28,16 @@
     "availability": "Availability",
     "schedule": "Shifts",
     "teamSchedule": "Schedule",
-    "requests": "Requests"
+    "requests": "Requests",
+    "locations": "Locations",
+    "absences": "Time off",
+    "settings": "Settings",
+    "swaps": "Swaps",
+    "chat": "Chat",
+    "main": "Main navigation",
+    "menu": "Menu",
+    "overview": "All bars",
+    "reports": "Hour report"
   },
   "login": {
     "title": "Welcome back",
@@ -36,7 +47,8 @@
     "submit": "Sign in",
     "submitting": "Signing in…",
     "invitationOnly": "Access is by invitation only. If you don't have an account yet, ask Stefano or Tessa.",
-    "notConfigured": "The database connection is not configured yet. Add the Supabase credentials to .env.local (see the README)."
+    "notConfigured": "The database connection is not configured yet. Add the Supabase credentials to .env.local (see the README).",
+    "idOrEmail": "Name or email"
   },
   "setPassword": {
     "title": "Set your password",
@@ -147,7 +159,12 @@
       "inviteFailed": "Could not send the invitation. Try again later.",
       "saveFailed": "Saving failed.",
       "notFound": "Employee not found."
-    }
+    },
+    "locationsTitle": "Locations",
+    "locationsHint": "Where this person can work. They can be assigned to several locations.",
+    "locationsSave": "Save locations",
+    "locationsSaved": "Locations updated.",
+    "locationsNone": "No location: this person cannot see any calendar."
   },
   "notifications": {
     "title": "Notifications",
@@ -231,6 +248,54 @@
       "availability_changes_requested": {
         "title": "Changes requested",
         "body": "An admin asks for changes to your availability for the week of {week}: {note}"
+      },
+      "absence_requested": {
+        "title": "New absence request",
+        "body": "{name} asks for {absenceKind}: {dates}."
+      },
+      "absence_approved": {
+        "title": "Absence approved",
+        "body": "Your {absenceKind} request ({dates}) was approved."
+      },
+      "absence_rejected": {
+        "title": "Absence not approved",
+        "body": "Your {absenceKind} request ({dates}) was not approved. {note}"
+      },
+      "swap_proposed": {
+        "title": "Swap proposal",
+        "body": "{name} offers you their shift: {when}. {note}"
+      },
+      "swap_accepted": {
+        "title": "Swap accepted",
+        "body": "{other} accepted the shift on {when}. An administrator now has to approve it."
+      },
+      "swap_declined": {
+        "title": "Swap declined",
+        "body": "{other} cannot take the shift on {when}."
+      },
+      "swap_review": {
+        "title": "Swap to approve",
+        "body": "{name} → {other}: {when}."
+      },
+      "swap_approved": {
+        "title": "Swap approved",
+        "body": "The shift on {when} moves from {name} to {other}."
+      },
+      "swap_rejected": {
+        "title": "Swap not approved",
+        "body": "The swap for the shift on {when} was not approved. {note}"
+      },
+      "chat_message": {
+        "title": "New message",
+        "body": "{name}: {preview}"
+      },
+      "chat_mention": {
+        "title": "{name} mentioned you",
+        "body": "{preview}"
+      },
+      "shifts_updated": {
+        "title": "Your schedule was updated",
+        "body": "{assigned} new, {changed} changed, {removed} cancelled. Check your shifts."
       }
     },
     "soundOn": "Sound on (click to mute)",
@@ -381,7 +446,8 @@
       "no_submission": "The employee has not submitted availability for this week yet.",
       "note": "Reason (optional)",
       "confirm": "Save anyway",
-      "hint": "If you continue, the override will be recorded in the audit log."
+      "hint": "If you continue, the override will be recorded in the audit log.",
+      "absence": "This person is on approved leave or absent on one of these days."
     },
     "errors": {
       "forbidden": "You don't have permission to do this.",
@@ -394,7 +460,9 @@
       "not_open": "This shift is no longer available.",
       "already_requested": "You already sent a request for this time.",
       "already_decided": "Request already handled.",
-      "in_the_past": "You cannot offer a time that has already passed."
+      "in_the_past": "You cannot offer a time that has already passed.",
+      "invalid_location": "Invalid or archived location.",
+      "employee_not_in_location": "This person does not work at this location: assign them on their profile."
     },
     "summary": {
       "title": "Week summary",
@@ -412,9 +480,9 @@
       "outside_availability": "{name}: a shift is outside the submitted availability.",
       "no_submission": "{name}: no availability submitted for this week.",
       "overridden": "{name}: shift outside availability (override recorded).",
-      "long_shift": "{name}: very long shift ({hours} hours).",
-      "weekly_hours": "{name}: {hours} hours this week, above the configured threshold.",
-      "no_shifts": "{name} has no shifts this week."
+      "no_shifts": "{name} has no shifts this week.",
+      "on_absence": "{name}: shift during an approved absence.",
+      "understaffed": "{day}: {count, plural, =0 {nobody planned} one {# person planned} other {# people planned}}, minimum {min}."
     },
     "reviewPublish": "Review and publish",
     "history": "History",
@@ -443,7 +511,32 @@
     "offerTitle": "Offer your availability",
     "offerIntro": "Tell us when you can work. The shift is only created if an admin confirms it.",
     "offerSend": "Send offer",
-    "offerSent": "Offer sent: an admin has to confirm it."
+    "offerSent": "Offer sent: an admin has to confirm it.",
+    "absent": {
+      "label": "Away: {name} ({kind})",
+      "ferie": "holiday",
+      "assenza": "absence"
+    },
+    "coverage": "Coverage",
+    "print": "Print",
+    "publishedBy": "Published by {name}, {when}",
+    "covPeople": "{count, plural, =0 {nobody} one {# person} other {# people}}",
+    "covHours": "{hours} h",
+    "covAway": "{count, plural, one {# away} other {# away}}",
+    "covLow": "Few",
+    "covHigh": "Many",
+    "covUnder": "Below the minimum ({min})",
+    "agenda": "Week, day by day",
+    "todayBadge": "Today",
+    "you": "you",
+    "pendingTitle": "Changes not announced yet",
+    "pendingBody": "{changes, plural, one {# change} other {# changes}} for {employees, plural, one {# employee} other {# employees}}. Nobody has been notified.",
+    "pendingSend": "Notify the team",
+    "pendingDiscard": "Don't notify",
+    "pendingSent": "Notified {employees, plural, one {# employee} other {# employees}}.",
+    "pendingConfirm": "Discard the notices? The shifts stay as they are, but nobody will be told.",
+    "addToCalendar": "Add to calendar",
+    "printAll": "Print all bars"
   },
   "publish": {
     "reviewTitle": "Schedule review",
@@ -484,7 +577,13 @@
       "invalid_input": "Invalid week.",
       "unknown": "Something went wrong. Please try again."
     },
-    "shareWhatsApp": "Share to the WhatsApp group →"
+    "shareWhatsApp": "Share to the WhatsApp group →",
+    "pushTitle": "Push notifications",
+    "pushNotified": "{count, plural, =0 {nobody notified} one {# person notified} other {# people notified}}",
+    "pushMissing": "{count, plural, =0 {everyone reachable} one {# without notifications} other {# without notifications}}",
+    "pushDisabled": "notifications off",
+    "pushNone": "never enabled",
+    "pushNote": "People without push still see the schedule in the app (bell) and get the email, if configured."
   },
   "whatsapp": {
     "title": "Share to the staff WhatsApp group",
@@ -541,5 +640,335 @@
     "mine": "My requests",
     "withdraw": "Withdraw",
     "withdrawFailed": "Could not withdraw the request."
+  },
+  "locations": {
+    "title": "Locations",
+    "intro": "Add your bars, pick a colour and assign staff. A location with history is archived, never deleted.",
+    "none": "No active location. Create one in the Locations section.",
+    "noneEmployee": "You are not assigned to a location yet. Ask an administrator.",
+    "switch": "Switch location",
+    "add": "Add location",
+    "newName": "Location name",
+    "color": "Colour",
+    "create": "Create",
+    "save": "Save",
+    "rename": "Edit",
+    "cancel": "Cancel",
+    "archive": "Archive",
+    "restore": "Restore",
+    "delete": "Delete",
+    "archived": "Archived",
+    "staff": "{count, plural, =0 {nobody} one {# person} other {# people}}",
+    "confirmArchive": "Archive this location? It disappears from planning but its history stays.",
+    "confirmDelete": "Permanently delete this location? This cannot be undone.",
+    "errors": {
+      "forbidden": "You do not have permission for this action.",
+      "invalid_input": "Check the name and colour.",
+      "name_taken": "A location with this name already exists.",
+      "last_location": "At least one location must stay active.",
+      "location_in_use": "This location has shifts or requests: archive it instead of deleting it.",
+      "not_found": "Location not found.",
+      "invalid_employee": "Invalid employee.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "absences": {
+    "title": "Time off",
+    "intro": "Ask for holiday or report an absence: an administrator has to approve it. Once approved you will not be scheduled on those days.",
+    "new": "New request",
+    "kind": "Type",
+    "ferie": "Holiday",
+    "assenza": "Absence",
+    "from": "From",
+    "to": "To",
+    "reason": "Reason (optional)",
+    "send": "Send request",
+    "sending": "Sending…",
+    "sent": "Request sent.",
+    "mine": "My requests",
+    "none": "No requests.",
+    "withdraw": "Withdraw",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Not approved",
+      "cancelled": "Withdrawn"
+    },
+    "errors": {
+      "forbidden": "You do not have permission for this action.",
+      "invalid_input": "Check the dates (120 days at most).",
+      "absence_overlap": "You already have a request on these days.",
+      "not_found": "Request not found or can no longer be withdrawn.",
+      "already_decided": "This request was already handled.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "requestsAbsences": {
+    "title": "Time off",
+    "none": "No absence requests waiting.",
+    "conflicts": "Approved. Note: {count, plural, one {# shift already planned falls} other {# shifts already planned fall}} on these days: check them in the calendar.",
+    "approved": "Approved.",
+    "rejected": "Declined.",
+    "recent": "Recently decided",
+    "conflictsShort": "{count, plural, one {# shift to fix} other {# shifts to fix}}"
+  },
+  "settings": {
+    "title": "Rules & Options",
+    "intro": "Choose which checks are flagged while planning. They are operational warnings. Overlapping shifts are always blocked; shift length is up to you.",
+    "alwaysOn": "Overlapping shifts: always on and cannot be turned off.",
+    "staffing": "Minimum staff per day",
+    "staffingHint": "Flags days with fewer people planned (per location). Off by default.",
+    "people": "people",
+    "save": "Save rules",
+    "saving": "Saving…",
+    "saved": "Rules saved.",
+    "errors": {
+      "forbidden": "You do not have permission for this action.",
+      "invalid_input": "Check the values.",
+      "unknown": "Something went wrong. Please try again."
+    },
+    "swapApproval": "Shift swaps need an administrator's approval",
+    "swapApprovalHint": "When off, the colleague's yes is enough and the shift moves at once.",
+    "chatBroadcast": "Location chats as a notice board: employees can only reply",
+    "chatBroadcastHint": "When on, in the location chats only administrators start a topic; employees reply to messages.",
+    "purgeTitle": "Automatic clean-up",
+    "purgeHint": "Every day, chat messages and notification logs older than 90 days are deleted. Shifts and published schedules are never touched.",
+    "purgeLast": "Last clean-up: {when} · {messages} messages and {notifications} notifications deleted.",
+    "purgeNever": "No clean-up has run yet.",
+    "purgeNow": "Clean now",
+    "purgeConfirm": "Delete messages and notifications older than 90 days now? This cannot be undone.",
+    "purgeDone": "Deleted {messages} messages and {notifications} notifications."
+  },
+  "swaps": {
+    "title": "Shift swaps",
+    "intro": "Hand one of your shifts to a colleague: they must accept and, if required, an administrator confirms. The calendar only changes at the end.",
+    "incoming": "Requests for you",
+    "noIncoming": "Nobody has offered you a shift.",
+    "incomingFrom": "{name} offers you a shift",
+    "outgoingTo": "You offered {name}",
+    "accept": "Accept",
+    "decline": "Decline",
+    "doneReview": "Accepted: an administrator now approves it.",
+    "doneApproved": "Done: the shift is yours.",
+    "myShifts": "My upcoming shifts",
+    "noShifts": "You have no upcoming shifts.",
+    "propose": "Propose swap",
+    "swapOngoing": "Swap in progress",
+    "chooseColleague": "Colleague",
+    "noteLabel": "Message (optional)",
+    "send": "Send proposal",
+    "loading": "Looking for free colleagues…",
+    "noCandidates": "No colleague is free at that time.",
+    "proposed": "Proposal sent.",
+    "history": "My proposals and history",
+    "noHistory": "No swaps.",
+    "withdraw": "Withdraw",
+    "status": {
+      "pending": "Waiting for colleague",
+      "review": "Waiting for administrator",
+      "approved": "Approved",
+      "rejected": "Not approved",
+      "cancelled": "Cancelled"
+    },
+    "adminTitle": "Shift swaps to approve",
+    "adminNone": "No swaps waiting.",
+    "adminLine": "{from} → {to}",
+    "adminAccepted": "The colleague accepted.",
+    "errors": {
+      "forbidden": "You do not have permission for this action.",
+      "invalid_input": "Invalid data.",
+      "not_found": "Not found.",
+      "in_the_past": "The shift has already started.",
+      "recipient_unavailable": "This colleague cannot take the shift.",
+      "swap_exists": "There is already a swap in progress for this shift.",
+      "already_decided": "Already handled.",
+      "swap_stale": "The shift changed in the meantime.",
+      "recipient_busy": "The colleague now has another shift at that time.",
+      "recipient_absent": "The colleague is away that day.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "pwa": {
+    "offline": "You are offline: some features are unavailable until you reconnect.",
+    "updateAvailable": "A new version is available.",
+    "update": "Update",
+    "push": {
+      "title": "Phone notifications",
+      "intro": "Get an alert when the schedule is published, a shift changes or a request arrives.",
+      "onHint": "Notifications are on for this device.",
+      "on": "On",
+      "off": "Off",
+      "enable": "Turn on notifications",
+      "enabling": "Turning on…",
+      "disable": "Turn off",
+      "test": "Send a test",
+      "enabled": "Notifications turned on.",
+      "error": "Could not turn them on. Please try again.",
+      "testSent": "{count, plural, one {Test sent to # device.} other {Test sent to # devices.}}",
+      "testNone": "No device received the test.",
+      "notConfigured": "Push notifications are not configured on the server yet.",
+      "blocked": "Notifications are blocked in your browser settings. Allow them there and reload the page.",
+      "unsupported": "This browser does not support push notifications. You will still get alerts in the app.",
+      "iosIntro": "On iPhone, notifications only work after the app is added to the Home Screen:",
+      "iosStep1": "Open this page in Safari and tap the Share button.",
+      "iosStep2": "Choose “Add to Home Screen”.",
+      "iosStep3": "Open Horti Magici from the Home Screen icon and turn on notifications here.",
+      "install": "Install the app"
+    }
+  },
+  "chat": {
+    "title": "Chat",
+    "threads": "Conversations",
+    "everyone": "Everyone",
+    "noMessages": "No messages",
+    "unread": "{count} unread",
+    "pickThread": "Pick a conversation.",
+    "empty": "No messages yet: write the first one.",
+    "back": "Back",
+    "notifications": "Notifications",
+    "notifyAll": "All messages",
+    "notifyMentions": "Mentions only",
+    "notifyNone": "Muted",
+    "placeholder": "Write a message…",
+    "send": "Send",
+    "reply": "Reply",
+    "delete": "Delete",
+    "confirmDelete": "Delete this message?",
+    "replyingTo": "Replying to {name}",
+    "cancelReply": "Cancel reply",
+    "mention": "Mention",
+    "broadcastOnly": "In this chat only administrators start a topic. You can answer a message with “Reply”.",
+    "retention": "Messages are deleted automatically after 90 days.",
+    "newDirect": "New private chat",
+    "errors": {
+      "forbidden": "You cannot write here.",
+      "invalid_input": "Invalid message (2000 characters at most).",
+      "broadcast_only": "Here you can only reply to messages.",
+      "not_found": "Message not found.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "audit": {
+    "title": "Activity log",
+    "intro": "Who did what, in order. The log is read-only: nobody can edit or delete it.",
+    "filters": "Filters",
+    "who": "Who",
+    "anyone": "Anyone",
+    "from": "From",
+    "to": "To",
+    "apply": "Filter",
+    "reset": "Reset filters",
+    "area": {
+      "all": "Everything",
+      "schedule": "Schedules",
+      "shifts": "Shifts",
+      "requests": "Requests",
+      "people": "People & locations",
+      "settings": "Settings",
+      "chat": "Chat"
+    },
+    "colWhen": "When",
+    "colWho": "Who",
+    "colWhat": "Action",
+    "colDetail": "Details",
+    "system": "System",
+    "empty": "No activity with these filters.",
+    "older": "Older",
+    "loadError": "Could not load the log.",
+    "appendOnly": "Older activity stays in the log: the 90-day clean-up never touches it.",
+    "link": "Activity log",
+    "actions": {
+      "absence_approved": "Absence approved",
+      "absence_rejected": "Absence declined",
+      "availability_changes_requested": "Availability changes requested",
+      "availability_confirmed": "Availability confirmed",
+      "availability_request_closed": "Availability request closed",
+      "availability_request_created": "Availability request created",
+      "availability_request_opened": "Availability request opened",
+      "chat_purged": "Chat clean-up run",
+      "employee_locations_changed": "Employee locations changed",
+      "location_archived": "Location archived",
+      "location_created": "Location created",
+      "location_deleted": "Location deleted",
+      "location_restored": "Location restored",
+      "location_updated": "Location updated",
+      "open_shift_cancelled": "Open shift cancelled",
+      "open_shift_created": "Open shift posted",
+      "schedule_published": "Schedule published",
+      "schedule_republished": "Schedule republished",
+      "settings_chat_options_changed": "Chat options changed",
+      "settings_rules_changed": "Rules changed",
+      "settings_swap_options_changed": "Swap options changed",
+      "shift_availability_override": "Shift outside availability confirmed",
+      "shift_created": "Shift created",
+      "shift_deleted": "Shift deleted",
+      "shift_swapped": "Shift swapped",
+      "shift_updated": "Shift updated",
+      "shift_request_approved": "Shift request approved",
+      "shift_request_rejected": "Shift request declined",
+      "swap_rejected": "Swap declined",
+      "whatsapp_share_confirmed": "WhatsApp send confirmed"
+    },
+    "reasons": {
+      "outside": "outside availability",
+      "no_submission": "availability not sent",
+      "absence": "during an absence"
+    }
+  },
+  "print": {
+    "printAction": "Print",
+    "back": "Back to shifts",
+    "draft": "DRAFT · not published yet",
+    "employee": "Employee",
+    "printedOn": "Printed {when}",
+    "overnight": "* the shift ends the next day",
+    "empty": "No shifts this week.",
+    "allBars": "All bars"
+  },
+  "desktop": {
+    "adminOnlyTitle": "Administrators' app",
+    "adminOnlyText": "This Windows version is for administrators. For your shifts, use Horti Magici on your phone or in the browser.",
+    "signOut": "Sign out"
+  },
+  "reports": {
+    "title": "Hour report",
+    "subtitle": "Hours worked per person and per bar, downloadable as Excel.",
+    "from": "From",
+    "to": "To",
+    "location": "Bar",
+    "allLocations": "All bars",
+    "apply": "Show",
+    "download": "Download Excel",
+    "presets": "Quick periods",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "employee": "Employee",
+    "shifts": "Shifts",
+    "hours": "Hours",
+    "total": "Total",
+    "noData": "No shifts in this period.",
+    "note": "Counts every shift in the calendar that starts in the period, including weeks that are not published yet. A night shift counts on the day it starts.",
+    "sheetSummary": "Summary",
+    "sheetDetail": "Detail",
+    "date": "Date",
+    "position": "Role",
+    "start": "Start",
+    "end": "End"
+  },
+  "overview": {
+    "title": "All bars",
+    "nav": "Week",
+    "prev": "Previous week",
+    "next": "Next week",
+    "today": "Today",
+    "hoursReport": "Hour report",
+    "legend": "Bars",
+    "nobody": "Nobody scheduled.",
+    "people": "{count, plural, one {# person} other {# people}}",
+    "employee": "Employee",
+    "hours": "Hours",
+    "coverage": "People",
+    "noEmployees": "No active employees."
   }
 }

@@ -10,7 +10,9 @@
     "signOut": "Esci",
     "language": "Lingua",
     "today": "Oggi",
-    "genericError": "Qualcosa è andato storto. Riprova."
+    "genericError": "Qualcosa è andato storto. Riprova.",
+    "skipToContent": "Vai al contenuto",
+    "close": "Chiudi"
   },
   "languages": {
     "it": "Italiano",
@@ -26,7 +28,16 @@
     "availability": "Disponibilità",
     "schedule": "Turni",
     "teamSchedule": "Orari",
-    "requests": "Richieste"
+    "requests": "Richieste",
+    "locations": "Locali",
+    "absences": "Assenze",
+    "settings": "Impostazioni",
+    "swaps": "Scambi",
+    "chat": "Chat",
+    "main": "Navigazione principale",
+    "menu": "Menu",
+    "overview": "Tutti i locali",
+    "reports": "Report ore"
   },
   "login": {
     "title": "Bentornato",
@@ -36,7 +47,8 @@
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
     "invitationOnly": "L'accesso è solo su invito. Se non hai ancora un account, chiedi a Stefano o Tessa.",
-    "notConfigured": "Il collegamento al database non è ancora configurato. Aggiungi le credenziali Supabase nel file .env.local (vedi README)."
+    "notConfigured": "Il collegamento al database non è ancora configurato. Aggiungi le credenziali Supabase nel file .env.local (vedi README).",
+    "idOrEmail": "Nome o email"
   },
   "setPassword": {
     "title": "Imposta la tua password",
@@ -147,7 +159,12 @@
       "inviteFailed": "Impossibile inviare l'invito. Riprova più tardi.",
       "saveFailed": "Salvataggio non riuscito.",
       "notFound": "Dipendente non trovato."
-    }
+    },
+    "locationsTitle": "Locali",
+    "locationsHint": "Dove può lavorare questa persona. Può essere assegnata a più locali.",
+    "locationsSave": "Salva locali",
+    "locationsSaved": "Locali aggiornati.",
+    "locationsNone": "Nessun locale: la persona non vede alcun calendario."
   },
   "notifications": {
     "title": "Notifiche",
@@ -231,6 +248,54 @@
       "availability_changes_requested": {
         "title": "Modifiche richieste",
         "body": "Un amministratore chiede modifiche alla tua disponibilità per la settimana {week}: {note}"
+      },
+      "absence_requested": {
+        "title": "Nuova richiesta di assenza",
+        "body": "{name} chiede {absenceKind}: {dates}."
+      },
+      "absence_approved": {
+        "title": "Assenza approvata",
+        "body": "La tua richiesta di {absenceKind} ({dates}) è stata approvata."
+      },
+      "absence_rejected": {
+        "title": "Assenza non approvata",
+        "body": "La tua richiesta di {absenceKind} ({dates}) non è stata approvata. {note}"
+      },
+      "swap_proposed": {
+        "title": "Proposta di scambio",
+        "body": "{name} ti propone il suo turno: {when}. {note}"
+      },
+      "swap_accepted": {
+        "title": "Scambio accettato",
+        "body": "{other} ha accettato il turno di {when}. Ora lo deve approvare un amministratore."
+      },
+      "swap_declined": {
+        "title": "Scambio rifiutato",
+        "body": "{other} non può prendere il turno di {when}."
+      },
+      "swap_review": {
+        "title": "Scambio da approvare",
+        "body": "{name} → {other}: {when}."
+      },
+      "swap_approved": {
+        "title": "Scambio approvato",
+        "body": "Il turno di {when} passa da {name} a {other}."
+      },
+      "swap_rejected": {
+        "title": "Scambio non approvato",
+        "body": "Lo scambio del turno di {when} non è stato approvato. {note}"
+      },
+      "chat_message": {
+        "title": "Nuovo messaggio",
+        "body": "{name}: {preview}"
+      },
+      "chat_mention": {
+        "title": "{name} ti ha menzionato",
+        "body": "{preview}"
+      },
+      "shifts_updated": {
+        "title": "Il tuo orario è stato aggiornato",
+        "body": "{assigned} nuovi, {changed} modificati, {removed} annullati. Controlla i tuoi turni."
       }
     },
     "soundOn": "Suono attivo (clic per disattivare)",
@@ -381,7 +446,8 @@
       "no_submission": "Il dipendente non ha ancora inviato la disponibilità per questa settimana.",
       "note": "Motivo (facoltativo)",
       "confirm": "Salva comunque",
-      "hint": "Se prosegui, la deroga verrà registrata nel registro attività."
+      "hint": "Se prosegui, la deroga verrà registrata nel registro attività.",
+      "absence": "Questa persona è in ferie o assente in uno di questi giorni (assenza approvata)."
     },
     "errors": {
       "forbidden": "Non hai i permessi per questa azione.",
@@ -394,7 +460,9 @@
       "not_open": "Questo turno non è più disponibile.",
       "already_requested": "Hai già inviato una richiesta per questo orario.",
       "already_decided": "Richiesta già gestita.",
-      "in_the_past": "Non puoi proporre un orario già passato."
+      "in_the_past": "Non puoi proporre un orario già passato.",
+      "invalid_location": "Locale non valido o archiviato.",
+      "employee_not_in_location": "Questa persona non lavora in questo locale: assegnala dalla sua scheda."
     },
     "summary": {
       "title": "Riepilogo settimana",
@@ -412,9 +480,9 @@
       "outside_availability": "{name}: un turno è fuori dalla disponibilità inviata.",
       "no_submission": "{name}: nessuna disponibilità inviata per questa settimana.",
       "overridden": "{name}: turno fuori disponibilità (deroga registrata).",
-      "long_shift": "{name}: turno molto lungo ({hours} ore).",
-      "weekly_hours": "{name}: {hours} ore in settimana, sopra la soglia impostata.",
-      "no_shifts": "{name} non ha turni questa settimana."
+      "no_shifts": "{name} non ha turni questa settimana.",
+      "on_absence": "{name}: turno durante un'assenza approvata.",
+      "understaffed": "{day}: {count, plural, =0 {nessuna persona pianificata} one {# persona pianificata} other {# persone pianificate}}, minimo {min}."
     },
     "reviewPublish": "Rivedi e pubblica",
     "history": "Cronologia",
@@ -443,7 +511,32 @@
     "offerTitle": "Proponi la tua disponibilità",
     "offerIntro": "Indica quando puoi lavorare. Il turno verrà creato solo se un amministratore lo conferma.",
     "offerSend": "Invia proposta",
-    "offerSent": "Proposta inviata: un amministratore deve confermarla."
+    "offerSent": "Proposta inviata: un amministratore deve confermarla.",
+    "absent": {
+      "label": "Assente: {name} ({kind})",
+      "ferie": "ferie",
+      "assenza": "assenza"
+    },
+    "coverage": "Copertura",
+    "print": "Stampa",
+    "publishedBy": "Pubblicata da {name}, {when}",
+    "covPeople": "{count, plural, =0 {nessuno} one {# persona} other {# persone}}",
+    "covHours": "{hours} ore",
+    "covAway": "{count, plural, one {# assente} other {# assenti}}",
+    "covLow": "Pochi",
+    "covHigh": "Tanti",
+    "covUnder": "Sotto il minimo ({min})",
+    "agenda": "Settimana giorno per giorno",
+    "todayBadge": "Oggi",
+    "you": "tu",
+    "pendingTitle": "Modifiche non ancora comunicate",
+    "pendingBody": "{changes, plural, one {# modifica} other {# modifiche}} per {employees, plural, one {# dipendente} other {# dipendenti}}. Nessuno è stato avvisato.",
+    "pendingSend": "Avvisa il team",
+    "pendingDiscard": "Non avvisare",
+    "pendingSent": "Notifica inviata a {employees, plural, one {# dipendente} other {# dipendenti}}.",
+    "pendingConfirm": "Scartare gli avvisi? I turni restano come sono, ma nessuno sarà avvisato.",
+    "addToCalendar": "Aggiungi al calendario",
+    "printAll": "Stampa tutti i locali"
   },
   "publish": {
     "reviewTitle": "Revisione del programma",
@@ -484,7 +577,13 @@
       "invalid_input": "Settimana non valida.",
       "unknown": "Qualcosa è andato storto. Riprova."
     },
-    "shareWhatsApp": "Condividi nel gruppo WhatsApp →"
+    "shareWhatsApp": "Condividi nel gruppo WhatsApp →",
+    "pushTitle": "Notifiche push",
+    "pushNotified": "{count, plural, =0 {nessuno notificato} one {# persona notificata} other {# persone notificate}}",
+    "pushMissing": "{count, plural, =0 {tutti raggiungibili} one {# senza notifiche} other {# senza notifiche}}",
+    "pushDisabled": "notifiche disattive",
+    "pushNone": "mai attivate",
+    "pushNote": "Chi non riceve il push vede comunque il programma nell'app (campanella) e riceve l'email, se configurata."
   },
   "whatsapp": {
     "title": "Condividi nel gruppo WhatsApp dello staff",
@@ -541,5 +640,335 @@
     "mine": "Le mie richieste",
     "withdraw": "Ritira",
     "withdrawFailed": "Impossibile ritirare la richiesta."
+  },
+  "locations": {
+    "title": "Locali",
+    "intro": "Aggiungi i tuoi locali, scegli il colore e assegna il personale. Un locale con storico si archivia, non si elimina.",
+    "none": "Nessun locale attivo. Creane uno nella sezione Locali.",
+    "noneEmployee": "Non sei ancora assegnato a nessun locale. Chiedi a un amministratore.",
+    "switch": "Cambia locale",
+    "add": "Aggiungi locale",
+    "newName": "Nome del locale",
+    "color": "Colore",
+    "create": "Crea",
+    "save": "Salva",
+    "rename": "Modifica",
+    "cancel": "Annulla",
+    "archive": "Archivia",
+    "restore": "Ripristina",
+    "delete": "Elimina",
+    "archived": "Archiviato",
+    "staff": "{count, plural, =0 {nessuno} one {# persona} other {# persone}}",
+    "confirmArchive": "Archiviare questo locale? Sparisce dalla pianificazione ma lo storico resta.",
+    "confirmDelete": "Eliminare definitivamente questo locale? Non si può annullare.",
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid_input": "Controlla nome e colore.",
+      "name_taken": "Esiste già un locale con questo nome.",
+      "last_location": "Deve restare almeno un locale attivo.",
+      "location_in_use": "Questo locale ha turni o richieste: archivialo invece di eliminarlo.",
+      "not_found": "Locale non trovato.",
+      "invalid_employee": "Dipendente non valido.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "absences": {
+    "title": "Assenze e ferie",
+    "intro": "Chiedi ferie o segnala un'assenza: un amministratore deve approvarla. Dopo l'approvazione non verrai pianificato in quei giorni.",
+    "new": "Nuova richiesta",
+    "kind": "Tipo",
+    "ferie": "Ferie",
+    "assenza": "Assenza",
+    "from": "Dal",
+    "to": "Al",
+    "reason": "Motivo (facoltativo)",
+    "send": "Invia richiesta",
+    "sending": "Invio…",
+    "sent": "Richiesta inviata.",
+    "mine": "Le mie richieste",
+    "none": "Nessuna richiesta.",
+    "withdraw": "Ritira",
+    "status": {
+      "pending": "In attesa",
+      "approved": "Approvata",
+      "rejected": "Non approvata",
+      "cancelled": "Ritirata"
+    },
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid_input": "Controlla le date (massimo 120 giorni).",
+      "absence_overlap": "Hai già una richiesta in questi giorni.",
+      "not_found": "Richiesta non trovata o non più ritirabile.",
+      "already_decided": "Richiesta già gestita.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "requestsAbsences": {
+    "title": "Assenze e ferie",
+    "none": "Nessuna richiesta di assenza in attesa.",
+    "conflicts": "Approvata. Attenzione: {count, plural, one {# turno già pianificato cade} other {# turni già pianificati cadono}} in questi giorni: controllali nel calendario.",
+    "approved": "Approvata.",
+    "rejected": "Rifiutata.",
+    "recent": "Decise di recente",
+    "conflictsShort": "{count, plural, one {# turno da sistemare} other {# turni da sistemare}}"
+  },
+  "settings": {
+    "title": "Regole & Opzioni",
+    "intro": "Scegli quali controlli segnalare durante la pianificazione. Sono avvisi operativi. I turni sovrapposti sono sempre bloccati; la durata dei turni è libera.",
+    "alwaysOn": "Turni sovrapposti: sempre attivo e non disattivabile.",
+    "staffing": "Personale minimo al giorno",
+    "staffingHint": "Segnala i giorni con meno persone pianificate (per ogni locale). Spento di default.",
+    "people": "persone",
+    "save": "Salva regole",
+    "saving": "Salvataggio…",
+    "saved": "Regole salvate.",
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid_input": "Controlla i valori inseriti.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    },
+    "swapApproval": "Gli scambi turno richiedono l'approvazione di un amministratore",
+    "swapApprovalHint": "Se spento, basta il sì del collega e il turno passa subito.",
+    "chatBroadcast": "Chat del locale come bacheca: i dipendenti possono solo rispondere",
+    "chatBroadcastHint": "Se acceso, nelle chat dei locali solo gli amministratori aprono un argomento; i dipendenti rispondono ai messaggi.",
+    "purgeTitle": "Pulizia automatica",
+    "purgeHint": "Ogni giorno vengono eliminati messaggi della chat e registri delle notifiche più vecchi di 90 giorni. Turni e programmi pubblicati non vengono mai toccati.",
+    "purgeLast": "Ultima pulizia: {when} · {messages} messaggi e {notifications} notifiche eliminati.",
+    "purgeNever": "Nessuna pulizia eseguita finora.",
+    "purgeNow": "Pulisci ora",
+    "purgeConfirm": "Eliminare ora messaggi e notifiche più vecchi di 90 giorni? Non si può annullare.",
+    "purgeDone": "Eliminati {messages} messaggi e {notifications} notifiche."
+  },
+  "swaps": {
+    "title": "Scambi turno",
+    "intro": "Passa un tuo turno a un collega: lui deve accettare e, se richiesto, un amministratore conferma. Il calendario cambia solo alla fine.",
+    "incoming": "Richieste per te",
+    "noIncoming": "Nessuno ti ha proposto un turno.",
+    "incomingFrom": "{name} ti propone un turno",
+    "outgoingTo": "Hai proposto a {name}",
+    "accept": "Accetta",
+    "decline": "Rifiuta",
+    "doneReview": "Accettato: ora lo approva un amministratore.",
+    "doneApproved": "Fatto: il turno è tuo.",
+    "myShifts": "I miei prossimi turni",
+    "noShifts": "Non hai turni futuri.",
+    "propose": "Proponi scambio",
+    "swapOngoing": "Scambio in corso",
+    "chooseColleague": "Collega",
+    "noteLabel": "Messaggio (facoltativo)",
+    "send": "Invia proposta",
+    "loading": "Cerco i colleghi liberi…",
+    "noCandidates": "Nessun collega libero in quell'orario.",
+    "proposed": "Proposta inviata.",
+    "history": "Le mie proposte e storico",
+    "noHistory": "Nessuno scambio.",
+    "withdraw": "Ritira",
+    "status": {
+      "pending": "Attende il collega",
+      "review": "Attende l'amministratore",
+      "approved": "Approvato",
+      "rejected": "Non approvato",
+      "cancelled": "Annullato"
+    },
+    "adminTitle": "Scambi turno da approvare",
+    "adminNone": "Nessuno scambio in attesa.",
+    "adminLine": "{from} → {to}",
+    "adminAccepted": "Il collega ha accettato.",
+    "errors": {
+      "forbidden": "Non hai i permessi per questa azione.",
+      "invalid_input": "Dati non validi.",
+      "not_found": "Non trovato.",
+      "in_the_past": "Il turno è già iniziato.",
+      "recipient_unavailable": "Questo collega non può prendere il turno.",
+      "swap_exists": "C'è già uno scambio in corso per questo turno.",
+      "already_decided": "Già gestito.",
+      "swap_stale": "Il turno è cambiato nel frattempo.",
+      "recipient_busy": "Il collega ha ora un altro turno in quell'orario.",
+      "recipient_absent": "Il collega è assente in quel giorno.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "pwa": {
+    "offline": "Sei offline: alcune funzioni non sono disponibili finché non torni online.",
+    "updateAvailable": "Nuova versione disponibile.",
+    "update": "Aggiorna",
+    "push": {
+      "title": "Notifiche sul telefono",
+      "intro": "Ricevi un avviso quando esce il programma, cambia un turno o arriva una richiesta.",
+      "onHint": "Le notifiche sono attive su questo dispositivo.",
+      "on": "Attive",
+      "off": "Non attive",
+      "enable": "Attiva notifiche",
+      "enabling": "Attivazione…",
+      "disable": "Disattiva",
+      "test": "Invia una prova",
+      "enabled": "Notifiche attivate.",
+      "error": "Non è stato possibile attivarle. Riprova.",
+      "testSent": "{count, plural, one {Prova inviata a # dispositivo.} other {Prova inviata a # dispositivi.}}",
+      "testNone": "Nessun dispositivo ha ricevuto la prova.",
+      "notConfigured": "Le notifiche push non sono ancora configurate sul server.",
+      "blocked": "Le notifiche sono bloccate nelle impostazioni del browser. Riattivale da lì e ricarica la pagina.",
+      "unsupported": "Questo browser non supporta le notifiche push. Riceverai comunque gli avvisi nell'app.",
+      "iosIntro": "Su iPhone le notifiche funzionano solo dopo aver aggiunto l'app alla schermata Home:",
+      "iosStep1": "Apri questa pagina in Safari e tocca il pulsante Condividi.",
+      "iosStep2": "Scegli «Aggiungi alla schermata Home».",
+      "iosStep3": "Apri Horti Magici dall'icona sulla Home e attiva le notifiche qui.",
+      "install": "Installa l'app"
+    }
+  },
+  "chat": {
+    "title": "Chat",
+    "threads": "Conversazioni",
+    "everyone": "Tutti",
+    "noMessages": "Nessun messaggio",
+    "unread": "{count} non letti",
+    "pickThread": "Scegli una conversazione.",
+    "empty": "Nessun messaggio: scrivi il primo.",
+    "back": "Indietro",
+    "notifications": "Notifiche",
+    "notifyAll": "Tutti i messaggi",
+    "notifyMentions": "Solo menzioni",
+    "notifyNone": "Silenziata",
+    "placeholder": "Scrivi un messaggio…",
+    "send": "Invia",
+    "reply": "Rispondi",
+    "delete": "Elimina",
+    "confirmDelete": "Eliminare questo messaggio?",
+    "replyingTo": "Risposta a {name}",
+    "cancelReply": "Annulla risposta",
+    "mention": "Menziona",
+    "broadcastOnly": "In questa chat solo gli amministratori aprono un argomento. Puoi rispondere a un messaggio con «Rispondi».",
+    "retention": "I messaggi vengono eliminati automaticamente dopo 90 giorni.",
+    "newDirect": "Nuova chat privata",
+    "errors": {
+      "forbidden": "Non puoi scrivere qui.",
+      "invalid_input": "Messaggio non valido (massimo 2000 caratteri).",
+      "broadcast_only": "Qui puoi solo rispondere ai messaggi.",
+      "not_found": "Messaggio non trovato.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "audit": {
+    "title": "Registro attività",
+    "intro": "Chi ha fatto cosa, in ordine cronologico. Il registro è di sola lettura: nessuno può modificarlo o cancellarlo.",
+    "filters": "Filtri",
+    "who": "Chi",
+    "anyone": "Tutti",
+    "from": "Dal",
+    "to": "Al",
+    "apply": "Filtra",
+    "reset": "Azzera filtri",
+    "area": {
+      "all": "Tutto",
+      "schedule": "Programmi",
+      "shifts": "Turni",
+      "requests": "Richieste",
+      "people": "Persone e locali",
+      "settings": "Impostazioni",
+      "chat": "Chat"
+    },
+    "colWhen": "Quando",
+    "colWho": "Chi",
+    "colWhat": "Azione",
+    "colDetail": "Dettagli",
+    "system": "Sistema",
+    "empty": "Nessuna attività con questi filtri.",
+    "older": "Più vecchie",
+    "loadError": "Impossibile caricare il registro.",
+    "appendOnly": "Le attività più vecchie restano nel registro: la pulizia dei 90 giorni non lo tocca.",
+    "link": "Registro attività",
+    "actions": {
+      "absence_approved": "Assenza approvata",
+      "absence_rejected": "Assenza rifiutata",
+      "availability_changes_requested": "Modifiche richieste alla disponibilità",
+      "availability_confirmed": "Disponibilità confermata",
+      "availability_request_closed": "Richiesta disponibilità chiusa",
+      "availability_request_created": "Richiesta disponibilità creata",
+      "availability_request_opened": "Richiesta disponibilità aperta",
+      "chat_purged": "Pulizia chat eseguita",
+      "employee_locations_changed": "Locali del dipendente modificati",
+      "location_archived": "Locale archiviato",
+      "location_created": "Locale creato",
+      "location_deleted": "Locale eliminato",
+      "location_restored": "Locale ripristinato",
+      "location_updated": "Locale modificato",
+      "open_shift_cancelled": "Turno aperto annullato",
+      "open_shift_created": "Turno aperto pubblicato",
+      "schedule_published": "Programma pubblicato",
+      "schedule_republished": "Programma ripubblicato",
+      "settings_chat_options_changed": "Opzioni chat modificate",
+      "settings_rules_changed": "Regole modificate",
+      "settings_swap_options_changed": "Opzioni scambi modificate",
+      "shift_availability_override": "Turno fuori disponibilità confermato",
+      "shift_created": "Turno creato",
+      "shift_deleted": "Turno eliminato",
+      "shift_swapped": "Turno scambiato",
+      "shift_updated": "Turno modificato",
+      "shift_request_approved": "Richiesta turno approvata",
+      "shift_request_rejected": "Richiesta turno rifiutata",
+      "swap_rejected": "Scambio rifiutato",
+      "whatsapp_share_confirmed": "Invio WhatsApp confermato"
+    },
+    "reasons": {
+      "outside": "fuori disponibilità",
+      "no_submission": "disponibilità non inviata",
+      "absence": "durante un'assenza"
+    }
+  },
+  "print": {
+    "printAction": "Stampa",
+    "back": "Torna ai turni",
+    "draft": "BOZZA · non ancora pubblicato",
+    "employee": "Dipendente",
+    "printedOn": "Stampato il {when}",
+    "overnight": "* il turno finisce il giorno dopo",
+    "empty": "Nessun turno in questa settimana.",
+    "allBars": "Tutti i locali"
+  },
+  "desktop": {
+    "adminOnlyTitle": "App per gli amministratori",
+    "adminOnlyText": "Questa versione per Windows è riservata agli amministratori. Per i tuoi turni usa Horti Magici sul telefono o dal browser.",
+    "signOut": "Esci"
+  },
+  "reports": {
+    "title": "Report ore",
+    "subtitle": "Ore lavorate per persona e per locale, da scaricare in Excel.",
+    "from": "Dal",
+    "to": "Al",
+    "location": "Locale",
+    "allLocations": "Tutti i locali",
+    "apply": "Mostra",
+    "download": "Scarica Excel",
+    "presets": "Periodi rapidi",
+    "thisWeek": "Questa settimana",
+    "thisMonth": "Questo mese",
+    "lastMonth": "Mese scorso",
+    "employee": "Dipendente",
+    "shifts": "Turni",
+    "hours": "Ore",
+    "total": "Totale",
+    "noData": "Nessun turno in questo periodo.",
+    "note": "Conta tutti i turni inseriti nel calendario che iniziano nel periodo, anche se la settimana non è ancora pubblicata. Un turno di notte conta nel giorno in cui inizia.",
+    "sheetSummary": "Riepilogo",
+    "sheetDetail": "Dettaglio",
+    "date": "Data",
+    "position": "Ruolo",
+    "start": "Inizio",
+    "end": "Fine"
+  },
+  "overview": {
+    "title": "Tutti i locali",
+    "nav": "Settimana",
+    "prev": "Settimana precedente",
+    "next": "Settimana successiva",
+    "today": "Oggi",
+    "hoursReport": "Report ore",
+    "legend": "Locali",
+    "nobody": "Nessuno in turno.",
+    "people": "{count, plural, one {# persona} other {# persone}}",
+    "employee": "Dipendente",
+    "hours": "Ore",
+    "coverage": "Persone",
+    "noEmployees": "Nessun dipendente attivo."
   }
 }

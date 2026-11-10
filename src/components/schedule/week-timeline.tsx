@@ -20,6 +20,8 @@ interface Props {
   hours: ShiftHours;
   /** employees see the same calendar but cannot create, move or resize anything */
   readOnly?: boolean;
+  /** admin only: people on approved leave per day */
+  absentByDay?: Record<string, { name: string; kind: "ferie" | "assenza" }[]>;
   /** highlights this person's shifts */
   meId?: string;
   selectedId: string | null;
@@ -46,7 +48,7 @@ function toItem(ev: CalEvent): Item {
  * People working at the same time are stacked in lanes inside the day's row.
  * Admins: click a shift to select it, drag to move, drag either edge to expand, or use the action bar.
  */
-export function WeekTimeline({ days, events, hours, readOnly, meId, selectedId, onSelect, onNew, onEdit, onMove }: Props) {
+export function WeekTimeline({ days, events, hours, readOnly, absentByDay, meId, selectedId, onSelect, onNew, onEdit, onMove }: Props) {
   const t = useTranslations("schedule");
   const locale = useLocale();
   const axis = axisOf(hours);
@@ -180,6 +182,11 @@ export function WeekTimeline({ days, events, hours, readOnly, meId, selectedId, 
               <div className="sticky left-0 z-10 flex flex-col justify-center border-r border-brand/10 bg-paper px-2 py-2 sm:px-4">
                 <span className="font-display text-base capitalize leading-tight text-brand sm:text-lg">{dayLabel(row.day, locale)}</span>
                 <span className="text-xs text-ink-soft">{row.people > 0 ? t("count", { count: row.people }) : t("nobody")}</span>
+                {(absentByDay?.[row.day] ?? []).map((a) => (
+                  <span key={a.name + a.kind} className="mt-0.5 block rounded bg-amber-100 px-1.5 text-xs text-amber-900" title={t(`absent.${a.kind}`)}>
+                    {t("absent.label", { name: a.name, kind: t(`absent.${a.kind}`) })}
+                  </span>
+                ))}
               </div>
               <div
                 ref={(el) => { trackRefs.current[idx] = el; }}

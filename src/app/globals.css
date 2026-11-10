@@ -50,3 +50,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .toast-in { animation: none; }
 }
+
+/* ───────── phones ───────── */
+@media (max-width: 767px) {
+  /* 16px stops iOS Safari from zooming the page when a field is focused */
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea { font-size: 16px; }
+  /* page titles: big enough to read, small enough not to wrap three lines */
+  main h1 { font-size: 1.875rem; line-height: 1.15; }
+  /* no sticky hover states on touch screens */
+  @media (hover: none) { .hover\:scale-\[1\.03\]:hover { transform: none; } }
+}
+/* never let the tab bar cover the last line of a page or a focused field */
+html { scroll-padding-bottom: 6rem; }

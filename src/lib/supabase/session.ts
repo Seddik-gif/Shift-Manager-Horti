@@ -24,6 +24,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
   if (!env) return response; // not configured yet: pages render the setup notice
 
   const supabase = createServerClient(env.url, env.anonKey, {
+    cookieOptions: { name: "sb-horti-auth" },
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll(cookiesToSet) {

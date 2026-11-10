@@ -15,13 +15,13 @@ const fail = (m?: string): { ok: false; error: (typeof KNOWN)[number] | "unknown
  * Builds the message from the published snapshot and records that it was prepared.
  * Nothing is ever sent to WhatsApp from here: the admin copies and pastes it manually.
  */
-export async function prepareShare(weekStart: string, locale: "it" | "en"): Promise<ShareResult<{ id: string; message: string }>> {
+export async function prepareShare(weekStart: string, locale: "it" | "en", locationId?: string): Promise<ShareResult<{ id: string; message: string }>> {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(weekStart) || (locale !== "it" && locale !== "en")) return { ok: false, error: "invalid_input" };
   const supabase = await createClient();
-  const { data: pub } = await supabase.from("published_schedules").select("snapshot").eq("week_start", weekStart).maybeSingle<{ snapshot: Snapshot }>();
+  const { data: pub } = await supabase.from("published_schedules").select("snapshot").eq("week_start", weekStart).eq("location_id", locationId ?? "").maybeSingle<{ snapshot: Snapshot }>();
   if (!pub) return { ok: false, error: "not_published" };
   const message = buildWeeklyMessage(pub.snapshot, locale);
-  const { data, error } = await supabase.rpc("prepare_whatsapp_share", { p_week_start: weekStart, p_locale: locale, p_message: message });
+  const { data, error } = await supabase.rpc("prepare_whatsapp_share", { p_week_start: weekStart, p_locale: locale, p_message: message, p_location: locationId ?? null });
   if (error) return fail(error.message);
   revalidatePath("/", "layout");
   return { ok: true, id: data as string, message };

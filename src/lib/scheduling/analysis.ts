@@ -10,10 +10,8 @@ export interface ShiftIn {
 }
 
 export interface SchedulingRules {
-  /** warn when a single shift is longer than this many hours (null = off) */
-  longShiftHours: number | null;
-  /** warn when an employee's weekly total exceeds this (null = off). An operational preference, not a legal limit. */
-  weeklyHoursWarning: number | null;
+  /** minimum number of people planned on each day at this location (null = off) */
+  minStaffPerDay?: number | null;
 }
 
 export type Warning =
@@ -21,8 +19,8 @@ export type Warning =
   | { type: "outside_availability"; employeeId: string; shiftId: string }
   | { type: "no_submission"; employeeId: string; shiftId: string }
   | { type: "overridden"; employeeId: string; shiftId: string }
-  | { type: "long_shift"; employeeId: string; shiftId: string; hours: number }
-  | { type: "weekly_hours"; employeeId: string; hours: number }
+  | { type: "on_absence"; employeeId: string; shiftId: string }
+  | { type: "understaffed"; employeeId: ""; day: string; count: number; min: number }
   | { type: "no_shifts"; employeeId: string };
 
 export interface WeekAnalysis {
@@ -43,13 +41,15 @@ interface Input {
   submittedEmployeeIds: Set<string>;
   requestExists: boolean;
   rules: SchedulingRules;
+  /** approved absences (Rome calendar days, inclusive) */
+  absences?: { employeeId: string; startDate: string; endDate: string }[];
 }
 
 const round = (n: number) => Math.round(n * 100) / 100;
 
 /** Pure scheduling analysis for one week: hours, counts and warnings. Mirrors the SQL rules. */
 export function analyzeWeek(input: Input): WeekAnalysis {
-  const { shifts, employeeIds, windows, submittedEmployeeIds, requestExists, rules } = input;
+  const { shifts, employeeIds, windows, submittedEmployeeIds, requestExists, rules, absences = [] } = input;
   const days = new Set(weekDays(input.weekStart));
   const hoursByEmployee: Record<string, number> = {};
   const hoursByDay: Record<string, number> = Object.fromEntries([...days].map((d) => [d, 0]));
@@ -63,8 +63,10 @@ export function analyzeWeek(input: Input): WeekAnalysis {
     const day = romeDay(s.startsAt);
     if (day in hoursByDay) hoursByDay[day] += h;
 
-    if (rules.longShiftHours !== null && h > rules.longShiftHours) {
-      warnings.push({ type: "long_shift", employeeId: s.employeeId, shiftId: s.id, hours: round(h) });
+    const firstDay = romeDay(s.startsAt);
+    const lastDay = romeDay(new Date(s.endsAt.getTime() - 1000));
+    if (absences.some((a) => a.employeeId === s.employeeId && a.startDate <= lastDay && a.endDate >= firstDay)) {
+      warnings.push({ type: s.override ? "overridden" : "on_absence", employeeId: s.employeeId, shiftId: s.id });
     }
     if (requestExists) {
       if (!submittedEmployeeIds.has(s.employeeId)) {
@@ -87,9 +89,14 @@ export function analyzeWeek(input: Input): WeekAnalysis {
 
   for (const id of employeeIds) {
     if (!shiftsByEmployee[id]) warnings.push({ type: "no_shifts", employeeId: id });
-    const total = hoursByEmployee[id];
-    if (rules.weeklyHoursWarning !== null && total !== undefined && total > rules.weeklyHoursWarning) {
-      warnings.push({ type: "weekly_hours", employeeId: id, hours: round(total) });
+  }
+
+  // minimum people planned per day at this location
+  const minStaff = rules.minStaffPerDay ?? null;
+  if (minStaff !== null) {
+    for (const day of days) {
+      const people = new Set(shifts.filter((s) => romeDay(s.startsAt) === day).map((s) => s.employeeId)).size;
+      if (people < minStaff) warnings.push({ type: "understaffed", employeeId: "", day, count: people, min: minStaff });
     }
   }
 
@@ -100,6 +107,6 @@ export function analyzeWeek(input: Input): WeekAnalysis {
 
 export function parseRules(value: unknown): SchedulingRules {
   const v = (value ?? {}) as Record<string, unknown>;
-  const num = (x: unknown) => (typeof x === "number" && Number.isFinite(x) && x > 0 ? x : null);
-  return { longShiftHours: num(v.long_shift_warning_hours), weeklyHoursWarning: num(v.weekly_hours_warning) };
+  const n = v.min_staff_per_day;
+  return { minStaffPerDay: typeof n === "number" && Number.isFinite(n) && n > 0 ? n : null };
 }

@@ -23,11 +23,12 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   return {
     title: { default: `${t("name")} · ${t("tagline")}`, template: `%s · ${t("name")}` },
     applicationName: t("name"),
-    appleWebApp: { capable: true, title: t("name") },
+    appleWebApp: { capable: true, title: t("name"), statusBarStyle: "default" },
+    icons: { icon: "/icons/icon-192.png", apple: "/icons/apple-touch-icon.png" },
   };
 }
 
-export const viewport: Viewport = { themeColor: "#234A49" };
+export const viewport: Viewport = { themeColor: "#234A49", viewportFit: "cover", width: "device-width", initialScale: 1 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;

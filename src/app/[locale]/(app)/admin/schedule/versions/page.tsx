@@ -2,6 +2,7 @@ import { getFormatter, getTranslations, setRequestLocale } from "next-intl/serve
 import { Link } from "@/i18n/navigation";
 import { ScheduleList } from "@/components/schedule/schedule-list";
 import { requireAdmin } from "@/lib/auth/guards";
+import { getLocationContext } from "@/lib/locations/active";
 import { createClient } from "@/lib/supabase/server";
 import { weekRangeLabel } from "@/lib/format/week";
 import { diffSnapshots, type Snapshot } from "@/lib/scheduling/snapshot";
@@ -26,7 +27,9 @@ export default async function VersionsPage({ params, searchParams }: PageProps<"
   const date = typeof sp.date === "string" && DAY_RE.test(sp.date) ? sp.date : todayInRome();
   const weekStart = mondayOf(date);
   const supabase = await createClient();
-  const { data: sched } = await supabase.from("weekly_schedules").select("id").eq("week_start", weekStart).maybeSingle<{ id: string }>();
+  const { active } = await getLocationContext();
+  if (!active) return <p className="rounded-[var(--radius-card)] bg-paper p-6 text-ink-soft">{(await getTranslations("locations"))("none")}</p>;
+  const { data: sched } = await supabase.from("weekly_schedules").select("id").eq("week_start", weekStart).eq("location_id", active.id).maybeSingle<{ id: string }>();
   const { data } = sched
     ? await supabase.from("schedule_versions")
         .select("version, snapshot, published_at, profiles:published_by(first_name, last_name)")
@@ -54,7 +57,7 @@ export default async function VersionsPage({ params, searchParams }: PageProps<"
         <p className="text-lg capitalize">{weekRangeLabel(weekStart, locale)}</p>
       </div>
 
-      {versions.length > 0 && <WhatsAppPanel key={share?.id ?? "new"} weekStart={weekStart} initial={share} />}
+      {versions.length > 0 && <WhatsAppPanel key={share?.id ?? "new"} locationId={active.id} weekStart={weekStart} initial={share} />}
 
       {versions.length === 0 ? (
         <p className="rounded-[var(--radius-card)] bg-paper p-6 text-ink-soft shadow-[var(--shadow-soft)]">{t("noVersions")}</p>

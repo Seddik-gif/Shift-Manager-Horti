@@ -9,6 +9,8 @@ export async function createClient() {
   const cookieStore = await cookies();
 
   return createServerClient(env.url, env.anonKey, {
+    // a fixed cookie name: the default is derived from the Supabase host, which differs between server and browser
+    cookieOptions: { name: "sb-horti-auth" },
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll(cookiesToSet) {

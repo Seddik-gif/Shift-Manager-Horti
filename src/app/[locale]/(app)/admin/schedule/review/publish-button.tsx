@@ -6,7 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { publishSchedule } from "@/lib/scheduling/publish-actions";
 import { Button } from "@/components/ui/button";
 
-export function PublishButton({ weekStart, republish, warningCount }: { weekStart: string; republish: boolean; warningCount: number }) {
+export function PublishButton({ weekStart, republish, warningCount, locationId }: { weekStart: string; republish: boolean; warningCount: number; locationId: string }) {
   const t = useTranslations("publish");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -18,7 +18,7 @@ export function PublishButton({ weekStart, republish, warningCount }: { weekStar
     if (!window.confirm(message)) return;
     setError(null);
     startTransition(async () => {
-      const res = await publishSchedule(weekStart);
+      const res = await publishSchedule(weekStart, locationId);
       if (!res.ok) return setError(res.error);
       setDone({ version: res.version });
       router.refresh();

@@ -11,10 +11,10 @@ export type PublishResult =
   | { ok: false; error: PublishError };
 
 /** Admin-only (enforced in SQL). One transaction: version, snapshot, audit, notifications. */
-export async function publishSchedule(weekStart: string): Promise<PublishResult> {
+export async function publishSchedule(weekStart: string, locationId?: string): Promise<PublishResult> {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(weekStart)) return { ok: false, error: "invalid_input" };
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("publish_schedule", { p_week_start: weekStart });
+  const { data, error } = await supabase.rpc("publish_schedule", { p_week_start: weekStart, p_location: locationId ?? null });
   if (error) return { ok: false, error: KNOWN.find((k) => error.message.includes(k)) ?? "unknown" };
   revalidatePath("/", "layout");
   emailSoon(); // email problems can never affect publication

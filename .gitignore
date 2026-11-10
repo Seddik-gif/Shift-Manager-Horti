@@ -49,3 +49,10 @@ supabase/.temp/
 supabase/.branches/
 # local editor / preview launcher config
 .claude/
+export/
+
+# desktop shell (Tauri)
+/desktop/node_modules
+/desktop/src-tauri/target
+/desktop/src-tauri/gen
+/backups
