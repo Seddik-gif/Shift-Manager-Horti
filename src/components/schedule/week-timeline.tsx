@@ -166,7 +166,7 @@ export function WeekTimeline({ days, events, hours, readOnly, absentByDay, meId,
           <div className="sticky left-0 z-20 bg-paper px-2 py-3 text-xs font-medium uppercase tracking-wide text-ink-soft sm:px-4">{t("days")}</div>
           <div className="relative h-10">
             {hourMarks.map((m) => (
-              <span key={m} className={cn("absolute top-0 flex h-full items-center text-xs tabular-nums text-ink-soft", m === axis.endMin ? "-translate-x-full pr-1" : "-translate-x-1/2")} style={{ left: `${pct(m)}%` }}>
+              <span key={m} className={cn("absolute top-0 flex h-full items-center text-xs tabular-nums text-ink-soft", m === axis.endMin ? "-translate-x-full pr-1" : m === axis.startMin ? "pl-1" : "-translate-x-1/2")} style={{ left: `${pct(m)}%` }}>
                 {minToTime(m)}
                 {m === 1440 && <sup className="ml-0.5 text-[9px] text-brand">+1</sup>}
               </span>

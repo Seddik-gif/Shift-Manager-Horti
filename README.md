@@ -9,6 +9,31 @@ Next.js (App Router) · TypeScript · Tailwind v4 · Supabase (Postgres, Auth, R
 > Guides: [docs/SECURITY.md](docs/SECURITY.md) · [docs/BACKUP.md](docs/BACKUP.md) · [docs/DESKTOP.md](docs/DESKTOP.md).
 > **Not yet done:** a run against a *hosted* Supabase project, real Resend email and real push on phones (see Known gaps).
 
+## Screenshots
+
+The interface is in Italian by default (English is one tap away). The data shown is local test data.
+
+### Admin (computer)
+
+| | |
+|---|---|
+| **Dashboard** – what needs attention today | **Week calendar** – horizontal timeline 07:00 → 02:00, simultaneous shifts stacked |
+| ![Admin dashboard](docs/screenshots/02-admin-dashboard.png) | ![Week calendar](docs/screenshots/03-admin-week-calendar.png) |
+| **Availability review** – see what an employee chose, then confirm or ask for changes | **Requests inbox** – employees ask, admins decide |
+| ![Availability review](docs/screenshots/05-admin-availability-review.png) | ![Requests](docs/screenshots/06-admin-requests.png) |
+| **All locations** – one grid across bars, hours per person | **Review & publish** – warnings, hours, versioned publication |
+| ![Coverage overview](docs/screenshots/07-admin-coverage-overview.png) | ![Review and publish](docs/screenshots/04-admin-review-publish.png) |
+
+### Employee (phone)
+
+| Dashboard | Availability | Team calendar |
+|---|---|---|
+| <img src="docs/screenshots/08-phone-dashboard.png" width="260" alt="Employee dashboard"> | <img src="docs/screenshots/09-phone-availability.png" width="260" alt="Availability form"> | <img src="docs/screenshots/10-phone-calendar.png" width="260" alt="Team calendar"> |
+
+### Sign in
+
+<img src="docs/screenshots/01-login.png" width="520" alt="Login page">
+
 ## Setup
 
 ```bash
